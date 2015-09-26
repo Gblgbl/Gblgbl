@@ -1,2 +1,2 @@
-print("Welcome!")
-print("q")
+print("Welcome!;")
+print("q;")

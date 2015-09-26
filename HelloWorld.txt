@@ -1,2 +1,2 @@
-print("Hello World!")
-print("Who are you?")
+print("Hello World!;")
+print("Who are you?;")
