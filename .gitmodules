@@ -1,3 +1,6 @@
 [submodule "Projects/ConsoleApplication1"]
 	path = Projects/ConsoleApplication1
 	url = C:\\Users\\Gblgbl\\GIT\\Projects\\ConsoleApplication1
+[submodule "Projects/ConsoleApplication2"]
+	path = Projects/ConsoleApplication2
+	url = C:\\Users\\Gblgbl\\GIT\\Projects\\ConsoleApplication2
