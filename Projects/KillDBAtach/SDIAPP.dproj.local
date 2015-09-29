@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <Transactions>
+    <Transaction>2015.09.28 14:04:40.542,=C:\proj\KillDBAtach\OKCANCL2.pas</Transaction>
+    <Transaction>2015.09.28 14:06:35.663,=C:\proj\KillDBAtach\Unit1.pas</Transaction>
+    <Transaction>2015.09.28 14:15:06.889,C:\proj\KillDBAtach\DBs.pas=C:\proj\KillDBAtach\Unit1.pas</Transaction>
+    <Transaction>2015.09.28 14:15:06.889,C:\proj\KillDBAtach\DBs.dfm=C:\proj\KillDBAtach\Unit1.dfm</Transaction>
+  </Transactions>
+</BorlandProject>
