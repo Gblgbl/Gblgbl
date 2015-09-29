@@ -5,8 +5,7 @@ interface
 uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
   Vcl.Menus, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls,
   Vcl.ImgList, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin, System.ImageList,
-  System.Actions, Dbs, SysUtils, Data.DB, IBX.IBDatabase, IBX.IBCustomDataSet,
-  IBX.IBQuery;
+  System.Actions, Dbs, SysUtils, Data.DB, IBX.IBDatabase;
 
 type
   TSDIAppForm = class(TForm)
@@ -42,56 +41,6 @@ type
     Memo1: TMemo;
     mFileDBS: TMemo;
     IBDatabase1: TIBDatabase;
-    IBTransaction1: TIBTransaction;
-    IBQueryOrders: TIBQuery;
-    IBUpdOrders: TIBQuery;
-    IBQueryOrdersORDERID: TIntegerField;
-    IBQueryOrdersPARENTID: TIntegerField;
-    IBQueryOrdersSYSUPDDATE: TDateTimeField;
-    IBQueryOrdersOWNERTYPE: TIntegerField;
-    IBQueryOrdersORDERNO: TIBStringField;
-    IBQueryOrdersAGREEMENTNO: TIBStringField;
-    IBQueryOrdersAGREEMENTDATE: TDateTimeField;
-    IBQueryOrdersCURRENCYID: TIntegerField;
-    IBQueryOrdersSELLERID: TIntegerField;
-    IBQueryOrdersCUSTOMERID: TIntegerField;
-    IBQueryOrdersORDERSTATEID: TIntegerField;
-    IBQueryOrdersPAYTYPEID: TIntegerField;
-    IBQueryOrdersITEMSTATUSMODE: TIntegerField;
-    IBQueryOrdersTOTALPRICELOCK: TIntegerField;
-    IBQueryOrdersLABORIOUSNESS: TIntegerField;
-    IBQueryOrdersPRODDATE: TDateTimeField;
-    IBQueryOrdersFACTORYNUM: TIntegerField;
-    IBQueryOrdersFLOORINSTALL: TIBStringField;
-    IBQueryOrdersPHONEINSTALL: TIBStringField;
-    IBQueryOrdersDATEORDER: TDateTimeField;
-    IBQueryOrdersORDERSTATUS: TSmallintField;
-    IBQueryOrdersLASTGENITEM: TIntegerField;
-    IBQueryOrdersRECCOLOR: TIntegerField;
-    IBQueryOrdersRECFLAG: TIntegerField;
-    IBQueryOrdersGUIDHI: TLargeintField;
-    IBQueryOrdersGUIDLO: TLargeintField;
-    IBQueryOrdersOWNERID: TIntegerField;
-    IBQueryOrdersDATECREATED: TDateTimeField;
-    IBQueryOrdersDATEMODIFIED: TDateTimeField;
-    IBQueryOrdersDATEDELETED: TDateTimeField;
-    IBQueryOrdersDELETED: TIntegerField;
-    IBQueryOrdersRCOMMENT: TIBStringField;
-    IBQueryOrdersADRESSINSTALL: TIBStringField;
-    IBQueryOrdersVALID: TIntegerField;
-    IBQueryOrdersTOTALPRICE: TIBBCDField;
-    IBQueryOrdersPAYMENT: TIBBCDField;
-    IBQueryOrdersISDEALERADD: TIntegerField;
-    IBQueryOrdersISDEALERSTARTADD: TIntegerField;
-    IBQueryOrdersDEALERGUIDHI: TLargeintField;
-    IBQueryOrdersDEALERGUIDLO: TLargeintField;
-    IBQueryOrdersISRESERVED: TIntegerField;
-    IBQueryOrdersAPPROVEDOCUMENTID: TIntegerField;
-    IBQueryOrdersACCOUNTID: TIntegerField;
-    IBQueryOrdersWPREQUESTID: TIntegerField;
-    IBQueryOrdersCROSSRATE: TFMTBCDField;
-    IBKillAttach: TIBQuery;
-    IBQueryAttach: TIBQuery;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
