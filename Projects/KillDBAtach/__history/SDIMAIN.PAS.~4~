@@ -5,7 +5,7 @@ interface
 uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
   Vcl.Menus, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls,
   Vcl.ImgList, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin, System.ImageList,
-  System.Actions, Dbs, SysUtils, Data.DB, IBX.IBDatabase;
+  System.Actions, Dbs, SysUtils;
 
 type
   TSDIAppForm = class(TForm)
@@ -40,7 +40,6 @@ type
     N3: TMenuItem;
     Memo1: TMemo;
     mFileDBS: TMemo;
-    IBDatabase1: TIBDatabase;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);

@@ -721,9 +721,4 @@ object SDIAppForm: TSDIAppForm
     Left = 136
     Top = 328
   end
-  object IBDatabase1: TIBDatabase
-    ServerType = 'IBServer'
-    Left = 32
-    Top = 192
-  end
 end
