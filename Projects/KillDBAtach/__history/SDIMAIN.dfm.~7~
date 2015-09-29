@@ -36,43 +36,26 @@ object SDIAppForm: TSDIAppForm
     SimplePanel = True
   end
   object eAgrno: TEdit
-    Left = 129
+    Left = 145
     Top = 5
     Width = 121
     Height = 24
     TabOrder = 1
-    OnChange = eAgrnoChange
+  end
+  object Memo1: TMemo
+    Left = 0
+    Top = 35
+    Width = 369
+    Height = 89
+    TabOrder = 2
   end
   object mFileDBS: TMemo
-    Left = 0
-    Top = 272
-    Width = 361
-    Height = 43
-    TabOrder = 2
-    WordWrap = False
-  end
-  object bScr: TButton
-    Left = 248
-    Top = 4
-    Width = 25
-    Height = 25
-    Default = True
-    Enabled = False
-    ImageAlignment = iaCenter
-    ImageIndex = 12
-    Images = ImageList1
+    Left = 8
+    Top = 248
+    Width = 337
+    Height = 73
     TabOrder = 3
-    OnClick = bScrClick
-  end
-  object sgOrders: TStringGrid
-    Left = 0
-    Top = 30
-    Width = 369
-    Height = 99
-    FixedCols = 0
-    RowCount = 2
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
-    TabOrder = 4
+    WordWrap = False
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -190,8 +173,8 @@ object SDIAppForm: TSDIAppForm
     end
   end
   object ImageList1: TImageList
-    Left = 248
-    Top = 336
+    Left = 72
+    Top = 328
     Bitmap = {
       494C01010F001300180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
@@ -739,6 +722,7 @@ object SDIAppForm: TSDIAppForm
     Top = 328
   end
   object IBDatabase1: TIBDatabase
+    Connected = True
     DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
     Params.Strings = (
       'user_name=sysdba')
@@ -747,10 +731,8 @@ object SDIAppForm: TSDIAppForm
     Top = 136
   end
   object IBTransaction1: TIBTransaction
+    Active = True
     DefaultDatabase = IBDatabase1
-    Params.Strings = (
-      'nowait')
-    AutoStopAction = saRollback
     Left = 24
     Top = 192
   end
@@ -976,8 +958,6 @@ object SDIAppForm: TSDIAppForm
     end
   end
   object IBUpdOrders: TIBQuery
-    Database = IBDatabase1
-    Transaction = IBTransaction1
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -999,8 +979,6 @@ object SDIAppForm: TSDIAppForm
       end>
   end
   object IBKillAttach: TIBQuery
-    Database = IBDatabase1
-    Transaction = IBTransaction1
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -1018,8 +996,6 @@ object SDIAppForm: TSDIAppForm
       end>
   end
   object IBQueryAttach: TIBQuery
-    Database = IBDatabase1
-    Transaction = IBTransaction1
     BufferChunks = 1000
     CachedUpdates = False
     ParamCheck = True
@@ -1048,9 +1024,5 @@ object SDIAppForm: TSDIAppForm
         Name = 'transaction_id'
         ParamType = ptUnknown
       end>
-  end
-  object FDPhysIBDriverLink1: TFDPhysIBDriverLink
-    Left = 352
-    Top = 160
   end
 end

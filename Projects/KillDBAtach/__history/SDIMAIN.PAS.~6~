@@ -6,8 +6,7 @@ uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
   Vcl.Menus, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.ComCtrls,
   Vcl.ImgList, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin, System.ImageList,
   System.Actions, Dbs, SysUtils, Data.DB, IBX.IBDatabase, IBX.IBCustomDataSet,
-  IBX.IBQuery, FireDAC.Phys.IBDef, FireDAC.Stan.Intf, FireDAC.Phys,
-  FireDAC.Phys.IBBase, FireDAC.Phys.IB, DBLogDlg, Vcl.Grids;
+  IBX.IBQuery;
 
 type
   TSDIAppForm = class(TForm)
@@ -40,6 +39,7 @@ type
     Options: TMenuItem;
     BDList: TMenuItem;
     N3: TMenuItem;
+    Memo1: TMemo;
     mFileDBS: TMemo;
     IBDatabase1: TIBDatabase;
     IBTransaction1: TIBTransaction;
@@ -92,9 +92,6 @@ type
     IBQueryOrdersCROSSRATE: TFMTBCDField;
     IBKillAttach: TIBQuery;
     IBQueryAttach: TIBQuery;
-    bScr: TButton;
-    FDPhysIBDriverLink1: TFDPhysIBDriverLink;
-    sgOrders: TStringGrid;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -106,8 +103,6 @@ type
     procedure fillMemoFromGrid ;
     procedure SetBDListSubMenu ;
     procedure OnBDListItemClick (Sender : TObject);
-    procedure eAgrnoChange(Sender: TObject);
-    procedure bScrClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -115,12 +110,6 @@ type
   end;
 const
   FileDBS = 'dbsList.dbl';
-  teststr = 'teststr';
-  emess = 'ExecSQL error.'+#13+#10+
-          'lock conflict on no wait transaction'+#13+#10+
-          'deadlock'+#13+#10+
-          'update conflicts with concurrent update'+#13+#10+
-          'concurrent transaction number is ';
 var
   SDIAppForm: TSDIAppForm;
   i : integer ;
@@ -208,12 +197,7 @@ procedure TSDIAppForm.FormActivate(Sender: TObject);
 begin
   DBs.Form1.sgBD.Cells[0,0]:='Имя';
   DBs.Form1.sgBD.Cells[1,0]:='Путь';
-  sgOrders.Rows[0].Add('№ дог.');
-  sgOrders.Rows[0].Add('Блок.');
-  sgOrders.Rows[0].Add('Когда');
-  sgOrders.Rows[0].Add('IP');
-  sgOrders.Rows[0].Add('Login');
-  //sgOrders.Rows[0].Add('');
+
   if FileExists(FileDBS) then
   begin
     mFileDBS.Lines.LoadFromFile(FileDBS) ;
@@ -221,43 +205,6 @@ begin
     SetBDListSubMenu;
   end
     else ShowMessage('Отсутствует список БД!');
-end;
-
-procedure TSDIAppForm.bScrClick(Sender: TObject);
-begin
-  //ShowMessage('q');
-  //sgOrders.Rows.Clear;
-  IBQueryOrders.ParamByName('agrno').Value:= Trim(eAgrno.Text);
-  IBQueryOrders.Open;
-  i := 0;
-  while not IBQueryOrders.Eof do
-  begin                                           //teststr
-    inc(i);
-    //if i > 1 then
-    sgOrders.RowCount:=i+1;
-    sgOrders.Rows[i].Add(IBQueryOrdersAGREEMENTNO.AsString);
-    IBUpdOrders.ParamByName('orderid').Value:=IBQueryOrdersORDERID.AsInteger;
-    IBUpdOrders.ParamByName('agrno').Value:=IBQueryOrdersAGREEMENTNO.AsString;
-    try
-      IBUpdOrders.ExecSQL;
-    except
-      On E : Exception do
-        ShowMessage(E.ClassName+#10+E.Message);
-    end;
-    //sgOrders.Rows[i].Add(IBQueryOrdersAGREEMENTNO.AsString);
-
-    //memo1.Lines.Add(IBQueryOrdersAGREEMENTNO.AsString);
-    IBQueryOrders.Next;
-  end;
-  IBQueryOrders.Close;
-end;
-
-procedure TSDIAppForm.eAgrnoChange(Sender: TObject);
-begin
-  if Length(Trim(eAgrno.Text)) > 5 then
-    bScr.Enabled := True
-    else
-    bScr.Enabled := False;
 end;
 
 procedure TSDIAppForm.FileExit1Execute(Sender: TObject);
