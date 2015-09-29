@@ -160,8 +160,8 @@ begin
     dbCap := Trim(Copy(tmp_str,1,Pos(SepChar,tmp_str)-1));
     dbName := Trim(Copy(tmp_str,Pos(SepChar,tmp_str)+1,Length(tmp_str)-Pos(SepChar,tmp_str)));
     DBs.Form1.sgBD.RowCount:=i+1;
-    DBs.Form1.sgBD.Cells[1,i]:= dbCap;
-    DBs.Form1.sgBD.Cells[2,i]:= dbName;
+    DBs.Form1.sgBD.Cells[0,i]:= dbCap;
+    DBs.Form1.sgBD.Cells[1,i]:= dbName;
   end;
 end;
 
@@ -175,10 +175,10 @@ begin
   mFileDBS.Lines.Clear;
   for i:= 1 to DBs.Form1.sgBD.RowCount do
   begin
-    if ((Trim(DBs.Form1.sgBD.Cells[1,i]) <> '') and (Trim(DBs.Form1.sgBD.Cells[2,i]) <> '')) then
+    if ((Trim(DBs.Form1.sgBD.Cells[0,i]) <> '') and (Trim(DBs.Form1.sgBD.Cells[1,i]) <> '')) then
     begin
-      dbCap   := DBs.Form1.sgBD.Cells[1,i];
-      dbName  := DBs.Form1.sgBD.Cells[2,i];
+      dbCap   := DBs.Form1.sgBD.Cells[0,i];
+      dbName  := DBs.Form1.sgBD.Cells[1,i];
       tmp_str := dbCap + SepChar + dbName ;
       mFileDBS.Lines.Add(tmp_str);
     end;
@@ -194,7 +194,7 @@ begin
   for I := 1 to DBs.Form1.sgBD.RowCount - 1  do
   begin
     item := TMenuItem.Create(BDlist);
-    item.Caption := DBs.Form1.sgBD.Cells[1,i];
+    item.Caption := DBs.Form1.sgBD.Cells[0,i];
     item.Name := 'BDListItem'+IntToStr(i);
     item.OnClick := OnBDListItemClick;
     BDList.Add(item);
@@ -223,9 +223,8 @@ end;
 
 procedure TSDIAppForm.FormActivate(Sender: TObject);
 begin
-  DBs.Form1.sgBD.Cells[0,0]:='Осн.';
-  DBs.Form1.sgBD.Cells[1,0]:='Имя';
-  DBs.Form1.sgBD.Cells[2,0]:='Путь';
+  DBs.Form1.sgBD.Cells[0,0]:='Имя';
+  DBs.Form1.sgBD.Cells[1,0]:='Путь';
   sgOrders.Rows[0].Add('№ дог.');
   sgOrders.Rows[0].Add('Блок.');
   sgOrders.Rows[0].Add('Когда');

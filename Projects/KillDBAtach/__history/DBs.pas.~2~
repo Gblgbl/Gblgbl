@@ -4,21 +4,13 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls,
-  System.ImageList, Vcl.ImgList, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls;
 
 type
   TForm1 = class(TForm)
     bOk: TButton;
     sgBD: TStringGrid;
-    ImageList1: TImageList;
-    bUp: TButton;
-    bDown: TButton;
-    GridEditPanel: TPanel;
-    RadioButton1: TRadioButton;
-    RadioButton2: TRadioButton;
     procedure sgBDKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,15 +23,6 @@ var
 implementation
 
 {$R *.dfm}
-
-procedure TForm1.FormActivate(Sender: TObject);
-begin
-  //bUp.Parent    :=  GridEditPanel;
-  //bDown.Parent  :=  GridEditPanel;
-  sgBD.ColWidths[0]:=35;
-  //sgBD.Objects[0,1]:=RadioButton1;
-
-end;
 
 procedure TForm1.sgBDKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
