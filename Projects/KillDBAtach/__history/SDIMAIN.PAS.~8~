@@ -7,7 +7,7 @@ uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
   Vcl.ImgList, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin, System.ImageList,
   System.Actions, Dbs, SysUtils, Data.DB, IBX.IBDatabase, IBX.IBCustomDataSet,
   IBX.IBQuery, FireDAC.Phys.IBDef, FireDAC.Stan.Intf, FireDAC.Phys,
-  FireDAC.Phys.IBBase, FireDAC.Phys.IB, DBLogDlg, Vcl.Grids, StrUtils;
+  FireDAC.Phys.IBBase, FireDAC.Phys.IB, DBLogDlg, Vcl.Grids;
 
 type
   TSDIAppForm = class(TForm)
@@ -95,23 +95,6 @@ type
     bScr: TButton;
     FDPhysIBDriverLink1: TFDPhysIBDriverLink;
     sgOrders: TStringGrid;
-    IBQueryAttachMONATTACHMENT_ID: TIntegerField;
-    IBQueryAttachMONSERVER_PID: TIntegerField;
-    IBQueryAttachMONSTATE: TSmallintField;
-    IBQueryAttachMONATTACHMENT_NAME: TIBStringField;
-    IBQueryAttachMONUSER: TIBStringField;
-    IBQueryAttachMONROLE: TIBStringField;
-    IBQueryAttachMONREMOTE_PROTOCOL: TIBStringField;
-    IBQueryAttachMONREMOTE_ADDRESS: TIBStringField;
-    IBQueryAttachMONREMOTE_PID: TIntegerField;
-    IBQueryAttachMONCHARACTER_SET_ID: TSmallintField;
-    IBQueryAttachMONTIMESTAMP: TDateTimeField;
-    IBQueryAttachMONGARBAGE_COLLECTION: TSmallintField;
-    IBQueryAttachMONREMOTE_PROCESS: TIBStringField;
-    IBQueryAttachMONSTAT_ID: TIntegerField;
-    IBQueryAttachMONTRANSACTION_ID: TIntegerField;
-    IBQueryAttachSQL_TEXT: TWideMemoField;
-    IBQueryAttachSTART_TR: TDateTimeField;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -133,8 +116,8 @@ type
 const
   FileDBS = 'dbsList.dbl';
   teststr = 'teststr';
- // emess = 'ExecSQL error.'+#13+#10+
-  emess = 'lock conflict on no wait transaction'+#13+#10+
+  emess = 'ExecSQL error.'+#13+#10+
+          'lock conflict on no wait transaction'+#13+#10+
           'deadlock'+#13+#10+
           'update conflicts with concurrent update'+#13+#10+
           'concurrent transaction number is ';
@@ -241,48 +224,25 @@ begin
 end;
 
 procedure TSDIAppForm.bScrClick(Sender: TObject);
-var
-  id : integer ;
-  ExceptionMessage : string ;
 begin
   //ShowMessage('q');
   //sgOrders.Rows.Clear;
   IBQueryOrders.ParamByName('agrno').Value:= Trim(eAgrno.Text);
   IBQueryOrders.Open;
   i := 0;
-  sgOrders.RowCount:=2;
-  sgOrders.Rows[1].Clear;
   while not IBQueryOrders.Eof do
   begin                                           //teststr
     inc(i);
     //if i > 1 then
-    //sgOrders.Rows[i].Clear;
     sgOrders.RowCount:=i+1;
     sgOrders.Rows[i].Add(IBQueryOrdersAGREEMENTNO.AsString);
     IBUpdOrders.ParamByName('orderid').Value:=IBQueryOrdersORDERID.AsInteger;
-    IBUpdOrders.ParamByName('agrno').Value:=IBQueryOrdersAGREEMENTNO.AsString+teststr;
-    id := 0;
+    IBUpdOrders.ParamByName('agrno').Value:=IBQueryOrdersAGREEMENTNO.AsString;
     try
       IBUpdOrders.ExecSQL;
     except
       On E : Exception do
-      begin
         ShowMessage(E.ClassName+#10+E.Message);
-        ExceptionMessage := E.Message;
-        if Pos(emess,ExceptionMessage) = 1 then
-          id:=StrToInt(Trim(AnsiReplaceText(ExceptionMessage, emess, ' ')));
-      end;
-    end;
-    if id <> 0 then
-    begin
-      sgOrders.Rows[i].Add('+');
-      IBQueryAttach.ParamByName('transaction_id').Value:=id;
-      IBQueryAttach.Open;
-      sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('START_TR').AsString);
-      IBQueryAttach.Close;
-    end else
-    begin
-      sgOrders.Rows[i].Add('-');
     end;
     //sgOrders.Rows[i].Add(IBQueryOrdersAGREEMENTNO.AsString);
 
