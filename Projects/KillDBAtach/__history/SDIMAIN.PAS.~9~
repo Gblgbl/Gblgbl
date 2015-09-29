@@ -255,17 +255,19 @@ begin
   while not IBQueryOrders.Eof do
   begin                                           //teststr
     inc(i);
+    //if i > 1 then
+    //sgOrders.Rows[i].Clear;
     sgOrders.RowCount:=i+1;
     sgOrders.Rows[i].Add(IBQueryOrdersAGREEMENTNO.AsString);
     IBUpdOrders.ParamByName('orderid').Value:=IBQueryOrdersORDERID.AsInteger;
-    IBUpdOrders.ParamByName('agrno').Value:=IBQueryOrdersAGREEMENTNO.AsString;//+teststr;
+    IBUpdOrders.ParamByName('agrno').Value:=IBQueryOrdersAGREEMENTNO.AsString+teststr;
     id := 0;
     try
       IBUpdOrders.ExecSQL;
     except
       On E : Exception do
       begin
-        //ShowMessage(E.ClassName+#10+E.Message);
+        ShowMessage(E.ClassName+#10+E.Message);
         ExceptionMessage := E.Message;
         if Pos(emess,ExceptionMessage) = 1 then
           id:=StrToInt(Trim(AnsiReplaceText(ExceptionMessage, emess, ' ')));
@@ -277,17 +279,17 @@ begin
       IBQueryAttach.ParamByName('transaction_id').Value:=id;
       IBQueryAttach.Open;
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('START_TR').AsString);
-      sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$REMOTE_ADDRESS').AsString);
-      sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$USER').AsString);
       IBQueryAttach.Close;
     end else
     begin
       sgOrders.Rows[i].Add('-');
     end;
+    //sgOrders.Rows[i].Add(IBQueryOrdersAGREEMENTNO.AsString);
+
+    //memo1.Lines.Add(IBQueryOrdersAGREEMENTNO.AsString);
     IBQueryOrders.Next;
   end;
   IBQueryOrders.Close;
-  IBTransaction1.Commit;
 end;
 
 procedure TSDIAppForm.eAgrnoChange(Sender: TObject);
