@@ -2,7 +2,7 @@ object SDIAppForm: TSDIAppForm
   Left = 197
   Top = 111
   Caption = 'SDI Application'
-  ClientHeight = 383
+  ClientHeight = 403
   ClientWidth = 369
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -24,7 +24,7 @@ object SDIAppForm: TSDIAppForm
   end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 364
+    Top = 384
     Width = 369
     Height = 19
     Margins.Left = 2
@@ -32,40 +32,59 @@ object SDIAppForm: TSDIAppForm
     Margins.Right = 2
     Margins.Bottom = 2
     AutoHint = True
-    Panels = <>
-    SimplePanel = True
-    ExplicitLeft = -7
+    Panels = <
+      item
+        Width = 100
+      end
+      item
+        Width = 100
+      end>
   end
   object eAgrno: TEdit
-    Left = 145
+    Left = 129
     Top = 5
     Width = 121
     Height = 24
     TabOrder = 1
-  end
-  object Memo1: TMemo
-    Left = 0
-    Top = 35
-    Width = 369
-    Height = 89
-    Lines.Strings = (
-      'Memo1')
-    TabOrder = 2
+    OnChange = eAgrnoChange
   end
   object mFileDBS: TMemo
-    Left = 193
-    Top = 248
-    Width = 64
-    Height = 41
-    TabOrder = 3
+    Left = 0
+    Top = 272
+    Width = 361
+    Height = 43
+    TabOrder = 2
     WordWrap = False
+  end
+  object bScr: TButton
+    Left = 248
+    Top = 4
+    Width = 25
+    Height = 25
+    Default = True
+    Enabled = False
+    ImageAlignment = iaCenter
+    ImageIndex = 12
+    Images = ImageList1
+    TabOrder = 3
+    OnClick = bScrClick
+  end
+  object sgOrders: TStringGrid
+    Left = 0
+    Top = 30
+    Width = 369
+    Height = 99
+    FixedCols = 0
+    RowCount = 2
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
+    TabOrder = 4
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
     Left = 8
     Top = 328
     object File1: TMenuItem
-      Caption = '&File'
+      Caption = '&'#1060#1072#1081#1083
       Hint = 'File related commands'
       object N1: TMenuItem
         Caption = '-'
@@ -74,21 +93,8 @@ object SDIAppForm: TSDIAppForm
         Action = FileExit1
       end
     end
-    object Edit1: TMenuItem
-      Caption = '&Edit'
-      Hint = 'Edit commands'
-      object CutItem: TMenuItem
-        Action = EditCut1
-      end
-      object CopyItem: TMenuItem
-        Action = EditCopy1
-      end
-      object PasteItem: TMenuItem
-        Action = EditPaste1
-      end
-    end
     object Options: TMenuItem
-      Caption = '&Options'
+      Caption = '&'#1053#1072#1089#1090#1088#1086#1081#1082#1080
       object BDList: TMenuItem
         Caption = #1042#1099#1073#1086#1088' '#1041#1044
       end
@@ -98,7 +104,7 @@ object SDIAppForm: TSDIAppForm
       end
     end
     object Help1: TMenuItem
-      Caption = '&Help'
+      Caption = '&'#1055#1086#1084#1086#1097#1100
       Hint = 'Help topics'
       object HelpAboutItem: TMenuItem
         Action = HelpAbout1
@@ -176,10 +182,10 @@ object SDIAppForm: TSDIAppForm
     end
   end
   object ImageList1: TImageList
-    Left = 72
-    Top = 328
+    Left = 248
+    Top = 336
     Bitmap = {
-      494C01010F001300140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -724,8 +730,401 @@ object SDIAppForm: TSDIAppForm
     Left = 136
     Top = 328
   end
-  object MainMenu2: TMainMenu
-    Left = 216
-    Top = 336
+  object IBDatabase1: TIBDatabase
+    DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
+    Params.Strings = (
+      'user_name=q')
+    ServerType = 'IBServer'
+    Left = 32
+    Top = 136
+  end
+  object IBTransaction1: TIBTransaction
+    DefaultDatabase = IBDatabase1
+    Params.Strings = (
+      'nowait')
+    Left = 24
+    Top = 192
+  end
+  object IBQueryOrders: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'select * from orders where agreementno containing :agrno')
+    Left = 112
+    Top = 136
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'agrno'
+        ParamType = ptUnknown
+      end>
+    object IBQueryOrdersORDERID: TIntegerField
+      FieldName = 'ORDERID'
+      Origin = '"ORDERS"."ORDERID"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object IBQueryOrdersPARENTID: TIntegerField
+      FieldName = 'PARENTID'
+      Origin = '"ORDERS"."PARENTID"'
+    end
+    object IBQueryOrdersSYSUPDDATE: TDateTimeField
+      FieldName = 'SYSUPDDATE'
+      Origin = '"ORDERS"."SYSUPDDATE"'
+    end
+    object IBQueryOrdersOWNERTYPE: TIntegerField
+      FieldName = 'OWNERTYPE'
+      Origin = '"ORDERS"."OWNERTYPE"'
+      Required = True
+    end
+    object IBQueryOrdersORDERNO: TIBStringField
+      FieldName = 'ORDERNO'
+      Origin = '"ORDERS"."ORDERNO"'
+      Required = True
+      Size = 64
+    end
+    object IBQueryOrdersAGREEMENTNO: TIBStringField
+      FieldName = 'AGREEMENTNO'
+      Origin = '"ORDERS"."AGREEMENTNO"'
+      Size = 32
+    end
+    object IBQueryOrdersAGREEMENTDATE: TDateTimeField
+      FieldName = 'AGREEMENTDATE'
+      Origin = '"ORDERS"."AGREEMENTDATE"'
+    end
+    object IBQueryOrdersCURRENCYID: TIntegerField
+      FieldName = 'CURRENCYID'
+      Origin = '"ORDERS"."CURRENCYID"'
+      Required = True
+    end
+    object IBQueryOrdersSELLERID: TIntegerField
+      FieldName = 'SELLERID'
+      Origin = '"ORDERS"."SELLERID"'
+    end
+    object IBQueryOrdersCUSTOMERID: TIntegerField
+      FieldName = 'CUSTOMERID'
+      Origin = '"ORDERS"."CUSTOMERID"'
+      Required = True
+    end
+    object IBQueryOrdersORDERSTATEID: TIntegerField
+      FieldName = 'ORDERSTATEID'
+      Origin = '"ORDERS"."ORDERSTATEID"'
+    end
+    object IBQueryOrdersPAYTYPEID: TIntegerField
+      FieldName = 'PAYTYPEID'
+      Origin = '"ORDERS"."PAYTYPEID"'
+    end
+    object IBQueryOrdersITEMSTATUSMODE: TIntegerField
+      FieldName = 'ITEMSTATUSMODE'
+      Origin = '"ORDERS"."ITEMSTATUSMODE"'
+    end
+    object IBQueryOrdersTOTALPRICELOCK: TIntegerField
+      FieldName = 'TOTALPRICELOCK'
+      Origin = '"ORDERS"."TOTALPRICELOCK"'
+    end
+    object IBQueryOrdersLABORIOUSNESS: TIntegerField
+      FieldName = 'LABORIOUSNESS'
+      Origin = '"ORDERS"."LABORIOUSNESS"'
+    end
+    object IBQueryOrdersPRODDATE: TDateTimeField
+      FieldName = 'PRODDATE'
+      Origin = '"ORDERS"."PRODDATE"'
+    end
+    object IBQueryOrdersFACTORYNUM: TIntegerField
+      FieldName = 'FACTORYNUM'
+      Origin = '"ORDERS"."FACTORYNUM"'
+    end
+    object IBQueryOrdersFLOORINSTALL: TIBStringField
+      FieldName = 'FLOORINSTALL'
+      Origin = '"ORDERS"."FLOORINSTALL"'
+      Size = 16
+    end
+    object IBQueryOrdersPHONEINSTALL: TIBStringField
+      FieldName = 'PHONEINSTALL'
+      Origin = '"ORDERS"."PHONEINSTALL"'
+      Size = 64
+    end
+    object IBQueryOrdersDATEORDER: TDateTimeField
+      FieldName = 'DATEORDER'
+      Origin = '"ORDERS"."DATEORDER"'
+      Required = True
+    end
+    object IBQueryOrdersORDERSTATUS: TSmallintField
+      FieldName = 'ORDERSTATUS'
+      Origin = '"ORDERS"."ORDERSTATUS"'
+    end
+    object IBQueryOrdersLASTGENITEM: TIntegerField
+      FieldName = 'LASTGENITEM'
+      Origin = '"ORDERS"."LASTGENITEM"'
+    end
+    object IBQueryOrdersRECCOLOR: TIntegerField
+      FieldName = 'RECCOLOR'
+      Origin = '"ORDERS"."RECCOLOR"'
+    end
+    object IBQueryOrdersRECFLAG: TIntegerField
+      FieldName = 'RECFLAG'
+      Origin = '"ORDERS"."RECFLAG"'
+    end
+    object IBQueryOrdersGUIDHI: TLargeintField
+      FieldName = 'GUIDHI'
+      Origin = '"ORDERS"."GUIDHI"'
+      Required = True
+    end
+    object IBQueryOrdersGUIDLO: TLargeintField
+      FieldName = 'GUIDLO'
+      Origin = '"ORDERS"."GUIDLO"'
+      Required = True
+    end
+    object IBQueryOrdersOWNERID: TIntegerField
+      FieldName = 'OWNERID'
+      Origin = '"ORDERS"."OWNERID"'
+      Required = True
+    end
+    object IBQueryOrdersDATECREATED: TDateTimeField
+      FieldName = 'DATECREATED'
+      Origin = '"ORDERS"."DATECREATED"'
+    end
+    object IBQueryOrdersDATEMODIFIED: TDateTimeField
+      FieldName = 'DATEMODIFIED'
+      Origin = '"ORDERS"."DATEMODIFIED"'
+    end
+    object IBQueryOrdersDATEDELETED: TDateTimeField
+      FieldName = 'DATEDELETED'
+      Origin = '"ORDERS"."DATEDELETED"'
+    end
+    object IBQueryOrdersDELETED: TIntegerField
+      FieldName = 'DELETED'
+      Origin = '"ORDERS"."DELETED"'
+    end
+    object IBQueryOrdersRCOMMENT: TIBStringField
+      FieldName = 'RCOMMENT'
+      Origin = '"ORDERS"."RCOMMENT"'
+      Size = 1024
+    end
+    object IBQueryOrdersADRESSINSTALL: TIBStringField
+      FieldName = 'ADRESSINSTALL'
+      Origin = '"ORDERS"."ADRESSINSTALL"'
+      Size = 256
+    end
+    object IBQueryOrdersVALID: TIntegerField
+      FieldName = 'VALID'
+      Origin = '"ORDERS"."VALID"'
+    end
+    object IBQueryOrdersTOTALPRICE: TIBBCDField
+      FieldName = 'TOTALPRICE'
+      Origin = '"ORDERS"."TOTALPRICE"'
+      Precision = 18
+      Size = 4
+    end
+    object IBQueryOrdersPAYMENT: TIBBCDField
+      FieldName = 'PAYMENT'
+      Origin = '"ORDERS"."PAYMENT"'
+      Precision = 18
+      Size = 4
+    end
+    object IBQueryOrdersISDEALERADD: TIntegerField
+      FieldName = 'ISDEALERADD'
+      Origin = '"ORDERS"."ISDEALERADD"'
+    end
+    object IBQueryOrdersISDEALERSTARTADD: TIntegerField
+      FieldName = 'ISDEALERSTARTADD'
+      Origin = '"ORDERS"."ISDEALERSTARTADD"'
+    end
+    object IBQueryOrdersDEALERGUIDHI: TLargeintField
+      FieldName = 'DEALERGUIDHI'
+      Origin = '"ORDERS"."DEALERGUIDHI"'
+    end
+    object IBQueryOrdersDEALERGUIDLO: TLargeintField
+      FieldName = 'DEALERGUIDLO'
+      Origin = '"ORDERS"."DEALERGUIDLO"'
+    end
+    object IBQueryOrdersISRESERVED: TIntegerField
+      FieldName = 'ISRESERVED'
+      Origin = '"ORDERS"."ISRESERVED"'
+    end
+    object IBQueryOrdersAPPROVEDOCUMENTID: TIntegerField
+      FieldName = 'APPROVEDOCUMENTID'
+      Origin = '"ORDERS"."APPROVEDOCUMENTID"'
+      Required = True
+    end
+    object IBQueryOrdersACCOUNTID: TIntegerField
+      FieldName = 'ACCOUNTID'
+      Origin = '"ORDERS"."ACCOUNTID"'
+    end
+    object IBQueryOrdersWPREQUESTID: TIntegerField
+      FieldName = 'WPREQUESTID'
+      Origin = '"ORDERS"."WPREQUESTID"'
+    end
+    object IBQueryOrdersCROSSRATE: TFMTBCDField
+      FieldName = 'CROSSRATE'
+      Origin = '"ORDERS"."CROSSRATE"'
+      Required = True
+      Precision = 18
+      Size = 7
+    end
+  end
+  object IBUpdOrders: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      'update orders set agreementno =:agrno'
+      'where orderid =:orderid')
+    Left = 192
+    Top = 136
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'agrno'
+        ParamType = ptUnknown
+      end
+      item
+        DataType = ftUnknown
+        Name = 'orderid'
+        ParamType = ptUnknown
+      end>
+  end
+  object IBKillAttach: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      
+        'delete  from mon$attachments  where mon$attachment_id  =:attachm' +
+        'ent_id')
+    Left = 280
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'attachment_id'
+        ParamType = ptUnknown
+      end>
+  end
+  object IBQueryAttach: TIBQuery
+    Database = IBDatabase1
+    Transaction = IBTransaction1
+    BufferChunks = 1000
+    CachedUpdates = False
+    ParamCheck = True
+    SQL.Strings = (
+      
+        'select distinct a.*,  t2.mon$transaction_id, coalesce(s.mon$sql_' +
+        'text,'#39#39') as sql_text, t.mon$timestamp as start_tr'
+      'from mon$transactions t'
+      
+        'join mon$attachments a on a.mon$attachment_id = t.mon$attachment' +
+        '_id'
+      
+        'join mon$transactions t2 on t2.mon$attachment_id = a.mon$attachm' +
+        'ent_id'
+      
+        'left join mon$statements s on s.mon$transaction_id = t2.mon$tran' +
+        'saction_id'
+      
+        'where t.mon$transaction_id =:transaction_id  and t2.mon$transact' +
+        'ion_id <> current_transaction')
+    Left = 192
+    Top = 192
+    ParamData = <
+      item
+        DataType = ftUnknown
+        Name = 'transaction_id'
+        ParamType = ptUnknown
+      end>
+    object IBQueryAttachMONATTACHMENT_ID: TIntegerField
+      FieldName = 'MON$ATTACHMENT_ID'
+      Origin = '"MON$ATTACHMENTS"."MON$ATTACHMENT_ID"'
+    end
+    object IBQueryAttachMONSERVER_PID: TIntegerField
+      FieldName = 'MON$SERVER_PID'
+      Origin = '"MON$ATTACHMENTS"."MON$SERVER_PID"'
+    end
+    object IBQueryAttachMONSTATE: TSmallintField
+      FieldName = 'MON$STATE'
+      Origin = '"MON$ATTACHMENTS"."MON$STATE"'
+    end
+    object IBQueryAttachMONATTACHMENT_NAME: TIBStringField
+      FieldName = 'MON$ATTACHMENT_NAME'
+      Origin = '"MON$ATTACHMENTS"."MON$ATTACHMENT_NAME"'
+      Size = 255
+    end
+    object IBQueryAttachMONUSER: TIBStringField
+      FieldName = 'MON$USER'
+      Origin = '"MON$ATTACHMENTS"."MON$USER"'
+      FixedChar = True
+      Size = 31
+    end
+    object IBQueryAttachMONROLE: TIBStringField
+      FieldName = 'MON$ROLE'
+      Origin = '"MON$ATTACHMENTS"."MON$ROLE"'
+      FixedChar = True
+      Size = 31
+    end
+    object IBQueryAttachMONREMOTE_PROTOCOL: TIBStringField
+      FieldName = 'MON$REMOTE_PROTOCOL'
+      Origin = '"MON$ATTACHMENTS"."MON$REMOTE_PROTOCOL"'
+      Size = 10
+    end
+    object IBQueryAttachMONREMOTE_ADDRESS: TIBStringField
+      FieldName = 'MON$REMOTE_ADDRESS'
+      Origin = '"MON$ATTACHMENTS"."MON$REMOTE_ADDRESS"'
+      Size = 255
+    end
+    object IBQueryAttachMONREMOTE_PID: TIntegerField
+      FieldName = 'MON$REMOTE_PID'
+      Origin = '"MON$ATTACHMENTS"."MON$REMOTE_PID"'
+    end
+    object IBQueryAttachMONCHARACTER_SET_ID: TSmallintField
+      FieldName = 'MON$CHARACTER_SET_ID'
+      Origin = '"MON$ATTACHMENTS"."MON$CHARACTER_SET_ID"'
+    end
+    object IBQueryAttachMONTIMESTAMP: TDateTimeField
+      FieldName = 'MON$TIMESTAMP'
+      Origin = '"MON$ATTACHMENTS"."MON$TIMESTAMP"'
+    end
+    object IBQueryAttachMONGARBAGE_COLLECTION: TSmallintField
+      FieldName = 'MON$GARBAGE_COLLECTION'
+      Origin = '"MON$ATTACHMENTS"."MON$GARBAGE_COLLECTION"'
+    end
+    object IBQueryAttachMONREMOTE_PROCESS: TIBStringField
+      FieldName = 'MON$REMOTE_PROCESS'
+      Origin = '"MON$ATTACHMENTS"."MON$REMOTE_PROCESS"'
+      Size = 255
+    end
+    object IBQueryAttachMONSTAT_ID: TIntegerField
+      FieldName = 'MON$STAT_ID'
+      Origin = '"MON$ATTACHMENTS"."MON$STAT_ID"'
+    end
+    object IBQueryAttachMONTRANSACTION_ID: TIntegerField
+      FieldName = 'MON$TRANSACTION_ID'
+      Origin = '"MON$TRANSACTIONS"."MON$TRANSACTION_ID"'
+    end
+    object IBQueryAttachSQL_TEXT: TWideMemoField
+      FieldName = 'SQL_TEXT'
+      ProviderFlags = []
+      BlobType = ftWideMemo
+      Size = 8
+    end
+    object IBQueryAttachSTART_TR: TDateTimeField
+      FieldName = 'START_TR'
+      Origin = '"MON$TRANSACTIONS"."MON$TIMESTAMP"'
+    end
+  end
+  object FDPhysIBDriverLink1: TFDPhysIBDriverLink
+    Left = 352
+    Top = 160
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 312
+    Top = 328
   end
 end

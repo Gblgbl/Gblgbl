@@ -123,7 +123,6 @@ type
     procedure eAgrnoChange(Sender: TObject);
     procedure bScrClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
-    procedure SetDBFileName;
   private
     { Private declarations }
   public
@@ -146,20 +145,6 @@ implementation
 uses About;
 
 {$R *.dfm}
-procedure TSDIAppForm.SetDBFileName;
-var
-  n : integer ;
-begin
-  for I := 0 to BDList.Count - 1 do
-  begin
-    if BDList.Items[i].Checked then
-    begin
-      n:=i;
-      IBDatabase1.DatabaseName := DBS.Form1.sgBD.Cells[2,i+1];
-    end;
-  end;
-end;
-
 procedure TSDIAppForm.fillGridFromMemo ;
 const
   SepChar = '=';
@@ -223,19 +208,8 @@ begin
 end;
 
 procedure TSDIAppForm.OnBDListItemClick ( Sender : TObject ) ;
-var
-  n : integer ;
 begin
-  //ShowMessage(IntToStr((Sender as TMenuItem).MenuIndex));
-  n := (Sender as TMenuItem).MenuIndex;
-  if not BDList.Items[n].Checked then
-  begin
-    for I := 0 to BDList.Count - 1 do
-      BDList.Items[i].Checked := False;
-    BDList.Items[n].Checked := true;
-    SetDBFileName;
-  end;
-
+  ShowMessage((Sender as TMenuItem).Name);
 end;
 
 procedure TSDIAppForm.FileNew1Execute(Sender: TObject);
@@ -269,11 +243,6 @@ begin
     mFileDBS.Lines.LoadFromFile(FileDBS) ;
     fillGridFromMemo;
     SetBDListSubMenu;
-    if BDList.Count > 0 then
-    begin
-      BDList.Items[0].Checked := True;
-      //IBDataBase1.DatabaseName
-    end;
   end
     else ShowMessage('Отсутствует список БД!');
 end;
