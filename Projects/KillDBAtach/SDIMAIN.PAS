@@ -155,7 +155,8 @@ begin
     if BDList.Items[i].Checked then
     begin
       n:=i;
-      IBDatabase1.DatabaseName := DBS.Form1.sgBD.Cells[2,i+1];
+      IBDatabase1.Connected := False ;
+      IBDatabase1.DatabaseName := DBS.Form1.sgBD.Cells[2,i+1];   //тут кака€-то шл€па
     end;
   end;
 end;
