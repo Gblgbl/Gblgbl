@@ -3,7 +3,7 @@ object SDIAppForm: TSDIAppForm
   Top = 111
   Caption = 'SDI Application'
   ClientHeight = 403
-  ClientWidth = 369
+  ClientWidth = 434
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,6 +13,9 @@ object SDIAppForm: TSDIAppForm
   Menu = MainMenu1
   OldCreateOrder = False
   OnActivate = FormActivate
+  DesignSize = (
+    434
+    403)
   PixelsPerInch = 96
   TextHeight = 16
   object Label1: TLabel
@@ -25,7 +28,7 @@ object SDIAppForm: TSDIAppForm
   object StatusBar: TStatusBar
     Left = 0
     Top = 384
-    Width = 369
+    Width = 434
     Height = 19
     Margins.Left = 2
     Margins.Top = 2
@@ -34,11 +37,12 @@ object SDIAppForm: TSDIAppForm
     AutoHint = True
     Panels = <
       item
-        Width = 100
+        Width = 300
       end
       item
         Width = 100
       end>
+    ExplicitWidth = 369
   end
   object eAgrno: TEdit
     Left = 129
@@ -72,12 +76,14 @@ object SDIAppForm: TSDIAppForm
   object sgOrders: TStringGrid
     Left = 0
     Top = 30
-    Width = 369
+    Width = 434
     Height = 99
+    Anchors = [akLeft, akTop, akRight, akBottom]
     FixedCols = 0
     RowCount = 2
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
     TabOrder = 4
+    ExplicitWidth = 432
   end
   object MainMenu1: TMainMenu
     Images = ImageList1

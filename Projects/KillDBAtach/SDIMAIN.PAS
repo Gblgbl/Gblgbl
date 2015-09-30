@@ -216,6 +216,8 @@ begin
   begin
     item := TMenuItem.Create(BDlist);
     item.Caption := DBs.Form1.sgBD.Cells[1,i];
+    
+    item.Hint := DBs.Form1.sgBD.Cells[2,i];
     item.Name := 'BDListItem'+IntToStr(i);
     item.OnClick := OnBDListItemClick;
     if Trim(DBs.Form1.sgBD.Cells[2,i]) = tmpStr then
