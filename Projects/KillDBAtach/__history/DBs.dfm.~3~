@@ -24,6 +24,7 @@ object Form1: TForm1
     Height = 129
     Anchors = [akTop, akRight, akBottom]
     TabOrder = 4
+    ExplicitLeft = 400
   end
   object bOk: TButton
     Left = 310
@@ -34,6 +35,7 @@ object Form1: TForm1
     Caption = 'Ok'
     ModalResult = 1
     TabOrder = 0
+    ExplicitLeft = 364
   end
   object sgBD: TStringGrid
     Left = 0
@@ -46,6 +48,7 @@ object Form1: TForm1
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goFixedColClick]
     TabOrder = 1
     OnKeyDown = sgBDKeyDown
+    ExplicitWidth = 407
     ColWidths = (
       87
       102
@@ -61,6 +64,7 @@ object Form1: TForm1
     ImageIndex = 0
     Images = ImageList1
     TabOrder = 3
+    ExplicitLeft = 413
   end
   object bUp: TButton
     Left = 359
@@ -72,6 +76,7 @@ object Form1: TForm1
     ImageIndex = 3
     Images = ImageList1
     TabOrder = 2
+    ExplicitLeft = 413
   end
   object RadioButton1: TRadioButton
     Left = 40
@@ -93,7 +98,7 @@ object Form1: TForm1
     Left = 200
     Top = 144
     Bitmap = {
-      494C010104000800180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010104000800140010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

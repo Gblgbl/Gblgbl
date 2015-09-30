@@ -18,6 +18,10 @@ type
     File1: TMenuItem;
     N1: TMenuItem;
     FileExitItem: TMenuItem;
+    Edit1: TMenuItem;
+    CutItem: TMenuItem;
+    CopyItem: TMenuItem;
+    PasteItem: TMenuItem;
     Help1: TMenuItem;
     HelpAboutItem: TMenuItem;
     ActionList1: TActionList;
@@ -108,7 +112,6 @@ type
     IBQueryAttachMONTRANSACTION_ID: TIntegerField;
     IBQueryAttachSQL_TEXT: TWideMemoField;
     IBQueryAttachSTART_TR: TDateTimeField;
-    Timer1: TTimer;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -122,7 +125,6 @@ type
     procedure OnBDListItemClick (Sender : TObject);
     procedure eAgrnoChange(Sender: TObject);
     procedure bScrClick(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
   private
     { Private declarations }
   public
@@ -197,14 +199,6 @@ begin
     item.OnClick := OnBDListItemClick;
     BDList.Add(item);
   end;
-end;
-
-procedure TSDIAppForm.Timer1Timer(Sender: TObject);
-begin
-  if IBDataBase1.Connected then
-    StatusBar.Panels[1].Text:='Подключено.'
-    else StatusBar.Panels[1].Text:='Не подключено.';
-
 end;
 
 procedure TSDIAppForm.OnBDListItemClick ( Sender : TObject ) ;

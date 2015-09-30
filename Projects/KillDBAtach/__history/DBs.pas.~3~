@@ -38,7 +38,6 @@ begin
   //bDown.Parent  :=  GridEditPanel;
   sgBD.ColWidths[0]:=35;
   //sgBD.Objects[0,1]:=RadioButton1;
-  sgBD.Cells[0,1]:='*';
 
 end;
 

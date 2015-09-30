@@ -32,8 +32,13 @@ object SDIAppForm: TSDIAppForm
     Margins.Right = 2
     Margins.Bottom = 2
     AutoHint = True
-    Panels = <>
-    SimplePanel = True
+    Panels = <
+      item
+        Width = 100
+      end
+      item
+        Width = 100
+      end>
   end
   object eAgrno: TEdit
     Left = 129
@@ -79,7 +84,7 @@ object SDIAppForm: TSDIAppForm
     Left = 8
     Top = 328
     object File1: TMenuItem
-      Caption = '&File'
+      Caption = '&'#1060#1072#1081#1083
       Hint = 'File related commands'
       object N1: TMenuItem
         Caption = '-'
@@ -88,21 +93,8 @@ object SDIAppForm: TSDIAppForm
         Action = FileExit1
       end
     end
-    object Edit1: TMenuItem
-      Caption = '&Edit'
-      Hint = 'Edit commands'
-      object CutItem: TMenuItem
-        Action = EditCut1
-      end
-      object CopyItem: TMenuItem
-        Action = EditCopy1
-      end
-      object PasteItem: TMenuItem
-        Action = EditPaste1
-      end
-    end
     object Options: TMenuItem
-      Caption = '&Options'
+      Caption = '&'#1053#1072#1089#1090#1088#1086#1081#1082#1080
       object BDList: TMenuItem
         Caption = #1042#1099#1073#1086#1088' '#1041#1044
       end
@@ -112,7 +104,7 @@ object SDIAppForm: TSDIAppForm
       end
     end
     object Help1: TMenuItem
-      Caption = '&Help'
+      Caption = '&'#1055#1086#1084#1086#1097#1100
       Hint = 'Help topics'
       object HelpAboutItem: TMenuItem
         Action = HelpAbout1
@@ -193,7 +185,7 @@ object SDIAppForm: TSDIAppForm
     Left = 248
     Top = 336
     Bitmap = {
-      494C01010F001300180010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -1129,5 +1121,10 @@ object SDIAppForm: TSDIAppForm
   object FDPhysIBDriverLink1: TFDPhysIBDriverLink
     Left = 352
     Top = 160
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 312
+    Top = 328
   end
 end
