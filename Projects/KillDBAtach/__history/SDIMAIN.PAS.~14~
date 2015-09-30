@@ -286,9 +286,6 @@ var
 begin
   //ShowMessage('q');
   //sgOrders.Rows.Clear;
-  //IBDataBase1.Connected := True ;
-  ShowMessage(IBDataBase1.DatabaseName);
-  ShowMessage(IBDataBase1.Connected.ToString );
   IBQueryOrders.ParamByName('agrno').Value:= Trim(eAgrno.Text);
   IBQueryOrders.Open;
   i := 0;

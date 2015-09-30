@@ -733,7 +733,7 @@ object SDIAppForm: TSDIAppForm
   object IBDatabase1: TIBDatabase
     DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
     Params.Strings = (
-      'user_name=q')
+      'user_name=sysdba')
     ServerType = 'IBServer'
     Left = 32
     Top = 136

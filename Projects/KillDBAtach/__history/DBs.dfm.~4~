@@ -43,9 +43,8 @@ object Form1: TForm1
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColCount = 3
     RowCount = 2
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing]
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goFixedColClick]
     TabOrder = 1
-    OnClick = sgBDClick
     OnKeyDown = sgBDKeyDown
     ColWidths = (
       87
@@ -62,7 +61,6 @@ object Form1: TForm1
     ImageIndex = 0
     Images = ImageList1
     TabOrder = 3
-    OnClick = bDownClick
   end
   object bUp: TButton
     Left = 359
@@ -74,7 +72,6 @@ object Form1: TForm1
     ImageIndex = 3
     Images = ImageList1
     TabOrder = 2
-    OnClick = bUpClick
   end
   object RadioButton1: TRadioButton
     Left = 40

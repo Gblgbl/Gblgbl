@@ -155,8 +155,7 @@ begin
     if BDList.Items[i].Checked then
     begin
       n:=i;
-      IBDatabase1.Connected := False ;
-      IBDatabase1.DatabaseName := DBS.Form1.sgBD.Cells[2,i+1];   //тут кака€-то шл€па
+      IBDatabase1.DatabaseName := DBS.Form1.sgBD.Cells[2,i+1];
     end;
   end;
 end;
@@ -286,9 +285,6 @@ var
 begin
   //ShowMessage('q');
   //sgOrders.Rows.Clear;
-  //IBDataBase1.Connected := True ;
-  ShowMessage(IBDataBase1.DatabaseName);
-  ShowMessage(IBDataBase1.Connected.ToString );
   IBQueryOrders.ParamByName('agrno').Value:= Trim(eAgrno.Text);
   IBQueryOrders.Open;
   i := 0;
