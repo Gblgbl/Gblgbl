@@ -15,7 +15,8 @@ type
     bUp: TButton;
     bDown: TButton;
     GridEditPanel: TPanel;
-    Label1: TLabel;
+    RadioButton1: TRadioButton;
+    RadioButton2: TRadioButton;
     procedure sgBDKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormActivate(Sender: TObject);
     procedure SetArrowButtonsEnabled ;
@@ -105,7 +106,6 @@ begin
   sgBD.ColWidths[0]:=35;
   //sgBD.Objects[0,1]:=RadioButton1;
   sgBD.Cells[0,1]:='*';
-
   SetArrowButtonsEnabled;
 end;
 

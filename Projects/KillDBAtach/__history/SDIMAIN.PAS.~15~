@@ -149,7 +149,6 @@ uses About;
 procedure TSDIAppForm.SetDBFileName;
 var
   n : integer ;
-  tmpStr : TIBFileName;
 begin
   for I := 0 to BDList.Count - 1 do
   begin
@@ -157,10 +156,7 @@ begin
     begin
       n:=i;
       IBDatabase1.Connected := False ;
-      
-      tmpStr := Trim(DBS.Form1.sgBD.Cells[2,i+1]);
-      IBDatabase1.DatabaseName := TIBFileName(tmpStr);   //тут кака€-то шл€па
-      //IBDatabase1.d
+      IBDatabase1.DatabaseName := DBS.Form1.sgBD.Cells[2,i+1];   //тут кака€-то шл€па
     end;
   end;
 end;
@@ -207,10 +203,7 @@ end;
 procedure TSDIAppForm.SetBDListSubMenu ;
 var
   item : TMenuItem;
-  tmpStr : string ;
 begin
-  tmpStr := IBDatabase1.DatabaseName; //  IBDatabase1.CheckDatabaseName
-  tmpStr := Trim(tmpStr);
   BDList.Clear;
   for I := 1 to DBs.Form1.sgBD.RowCount - 1  do
   begin
@@ -218,12 +211,8 @@ begin
     item.Caption := DBs.Form1.sgBD.Cells[1,i];
     item.Name := 'BDListItem'+IntToStr(i);
     item.OnClick := OnBDListItemClick;
-    if Trim(DBs.Form1.sgBD.Cells[2,i]) = tmpStr then
-      item.Checked := true
-      else item.Checked := false;
     BDList.Add(item);
   end;
-  //ShowMessage(IBDataBase1.DatabaseName);
 end;
 
 procedure TSDIAppForm.Timer1Timer(Sender: TObject);
@@ -285,7 +274,6 @@ begin
     begin
       BDList.Items[0].Checked := True;
       //IBDataBase1.DatabaseName
-      SetDBFileName;
     end;
   end
     else ShowMessage('ќтсутствует список Ѕƒ!');
@@ -296,6 +284,11 @@ var
   id : integer ;
   ExceptionMessage : string ;
 begin
+  //ShowMessage('q');
+  //sgOrders.Rows.Clear;
+  //IBDataBase1.Connected := True ;
+  ShowMessage(IBDataBase1.DatabaseName);
+  ShowMessage(IBDataBase1.Connected.ToString );
   IBQueryOrders.ParamByName('agrno').Value:= Trim(eAgrno.Text);
   IBQueryOrders.Open;
   i := 0;
