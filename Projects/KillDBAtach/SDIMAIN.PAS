@@ -7,7 +7,8 @@ uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
   Vcl.ImgList, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin, System.ImageList,
   System.Actions, Dbs, SysUtils, Data.DB, IBX.IBDatabase, IBX.IBCustomDataSet,
   IBX.IBQuery, FireDAC.Phys.IBDef, FireDAC.Stan.Intf, FireDAC.Phys,
-  FireDAC.Phys.IBBase, FireDAC.Phys.IB, DBLogDlg, Vcl.Grids, StrUtils;
+  FireDAC.Phys.IBBase, FireDAC.Phys.IB, DBLogDlg, Vcl.Grids, StrUtils,
+  PropAttach, Vcl.DBGrids;
 
 type
   TSDIAppForm = class(TForm)
@@ -89,7 +90,6 @@ type
     IBKillAttach: TIBQuery;
     IBQueryAttach: TIBQuery;
     bScr: TButton;
-    FDPhysIBDriverLink1: TFDPhysIBDriverLink;
     sgOrders: TStringGrid;
     IBQueryAttachMONATTACHMENT_ID: TIntegerField;
     IBQueryAttachMONSERVER_PID: TIntegerField;
@@ -109,6 +109,11 @@ type
     IBQueryAttachSQL_TEXT: TWideMemoField;
     IBQueryAttachSTART_TR: TDateTimeField;
     Timer1: TTimer;
+    PopupMenu1: TPopupMenu;
+    N2: TMenuItem;
+    N4: TMenuItem;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -124,6 +129,10 @@ type
     procedure bScrClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure SetDBFileName;
+    procedure sgOrdersMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PopupMenu1Popup(Sender: TObject);
+    procedure N2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -163,6 +172,13 @@ begin
       //IBDatabase1.d
     end;
   end;
+end;
+
+procedure TSDIAppForm.sgOrdersMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+//  if Button = mbRight then ShowMessage('Button.mbRight');
+
 end;
 
 procedure TSDIAppForm.fillGridFromMemo ;
@@ -250,6 +266,36 @@ begin
     SetDBFileName;
   end;
 
+end;
+
+procedure TSDIAppForm.PopupMenu1Popup(Sender: TObject);
+var
+  p : TPoint;
+  sysdba : boolean;
+begin
+  GetCursorPos(p);
+  {Имитируем нажатие левой кнопки мыши}
+  Mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTDOWN,p.x,p.y,0,0);
+  {Имитируем отпускание левой кнопки мыши}
+  Mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTUP, p.x,p.y,0,0);
+  Application.ProcessMessages;
+  if pos('SYSDBA',UpperCase(IBDatabase1.Params.Text)) > 0  then
+  begin
+    sysdba := true;
+  end else
+  begin
+    //PopUpMenu1.Items[1].Enabled
+    sysdba := false;
+  end;
+  if ((sgOrders.Cells[2,sgOrders.Row] <> '') and sysdba) then
+  begin
+    PopUpMenu1.Items[0].Enabled := true;
+    PopUpMenu1.Items[1].Enabled := true;
+  end
+  else  begin
+    PopUpMenu1.Items[0].Enabled := false;
+    PopUpMenu1.Items[1].Enabled := true;
+  end;
 end;
 
 procedure TSDIAppForm.FileNew1Execute(Sender: TObject);
@@ -357,6 +403,11 @@ end;
 procedure TSDIAppForm.HelpAbout1Execute(Sender: TObject);
 begin
   AboutBox.ShowModal;
+end;
+
+procedure TSDIAppForm.N2Click(Sender: TObject);
+begin
+  PropAttach.Form2.DBGrid1.DataSource := DataSource1;
 end;
 
 procedure TSDIAppForm.N3Click(Sender: TObject);

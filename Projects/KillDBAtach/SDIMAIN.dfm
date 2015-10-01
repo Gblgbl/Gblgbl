@@ -79,10 +79,41 @@ object SDIAppForm: TSDIAppForm
     Height = 99
     Anchors = [akLeft, akTop, akRight, akBottom]
     FixedCols = 0
-    RowCount = 2
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect]
+    RowCount = 3
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goColSizing, goRowSelect]
+    PopupMenu = PopupMenu1
     TabOrder = 4
+    OnMouseDown = sgOrdersMouseDown
     ExplicitWidth = 432
+  end
+  object DBGrid1: TDBGrid
+    Left = 0
+    Top = 146
+    Width = 320
+    Height = 120
+    DataSource = DataSource1
+    TabOrder = 5
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -13
+    TitleFont.Name = 'System'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'MON$ATTACHMENT_ID'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'MON$TRANSACTION_ID'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'SQL_TEXT'
+        Visible = True
+      end>
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -736,9 +767,10 @@ object SDIAppForm: TSDIAppForm
     Top = 328
   end
   object IBDatabase1: TIBDatabase
+    Connected = True
     DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
     Params.Strings = (
-      'user_name=sysdba')
+      'user_name=q')
     ServerType = 'IBServer'
     Left = 32
     Top = 136
@@ -1123,13 +1155,27 @@ object SDIAppForm: TSDIAppForm
       Origin = '"MON$TRANSACTIONS"."MON$TIMESTAMP"'
     end
   end
-  object FDPhysIBDriverLink1: TFDPhysIBDriverLink
-    Left = 352
-    Top = 160
-  end
   object Timer1: TTimer
     OnTimer = Timer1Timer
     Left = 312
     Top = 328
+  end
+  object PopupMenu1: TPopupMenu
+    OnPopup = PopupMenu1Popup
+    Left = 344
+    Top = 168
+    object N2: TMenuItem
+      Caption = #1055#1086#1076#1088#1086#1073#1085#1086#1089#1090#1080
+      Default = True
+      OnClick = N2Click
+    end
+    object N4: TMenuItem
+      Caption = #1059#1073#1080#1090#1100' '#1089#1086#1077#1076#1080#1085#1077#1085#1080#1077
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = IBQueryAttach
+    Left = 104
+    Top = 224
   end
 end

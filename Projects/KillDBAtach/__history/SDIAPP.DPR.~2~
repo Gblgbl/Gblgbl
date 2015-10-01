@@ -4,8 +4,7 @@ uses
   Forms,
   SDIMAIN in 'SDIMAIN.PAS' {SDIAppForm},
   ABOUT in 'ABOUT.PAS' {AboutBox},
-  DBs in 'DBs.pas' {Form1},
-  PropAttach in 'PropAttach.pas' {Form2};
+  DBs in 'DBs.pas' {Form1};
 
 {$R *.RES}
 
@@ -14,7 +13,6 @@ begin
   Application.CreateForm(TSDIAppForm, SDIAppForm);
   Application.CreateForm(TAboutBox, AboutBox);
   Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.
  
