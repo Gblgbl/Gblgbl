@@ -78,19 +78,27 @@ object SDIAppForm: TSDIAppForm
     Width = 434
     Height = 99
     Anchors = [akLeft, akTop, akRight, akBottom]
+    ColCount = 6
     FixedCols = 0
     RowCount = 3
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goColSizing, goRowSelect]
-    PopupMenu = PopupMenu1
     TabOrder = 4
+    OnClick = sgOrdersClick
     OnMouseDown = sgOrdersMouseDown
-    ExplicitWidth = 432
+    ColWidths = (
+      64
+      48
+      113
+      109
+      43
+      110)
   end
   object DBGrid1: TDBGrid
     Left = 0
     Top = 146
-    Width = 320
+    Width = 434
     Height = 120
+    Anchors = [akLeft, akRight, akBottom]
     DataSource = DataSource1
     TabOrder = 5
     TitleFont.Charset = DEFAULT_CHARSET
@@ -770,12 +778,13 @@ object SDIAppForm: TSDIAppForm
     Connected = True
     DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
     Params.Strings = (
-      'user_name=q')
+      'user_name=sysdba')
     ServerType = 'IBServer'
     Left = 32
     Top = 136
   end
   object IBTransaction1: TIBTransaction
+    Active = True
     DefaultDatabase = IBDatabase1
     Params.Strings = (
       'nowait')
@@ -1068,13 +1077,14 @@ object SDIAppForm: TSDIAppForm
       
         'where t.mon$transaction_id =:transaction_id  and t2.mon$transact' +
         'ion_id <> current_transaction')
-    Left = 192
-    Top = 192
+    Left = 344
+    Top = 168
     ParamData = <
       item
-        DataType = ftUnknown
+        DataType = ftInteger
         Name = 'transaction_id'
         ParamType = ptUnknown
+        Value = 143120901
       end>
     object IBQueryAttachMONATTACHMENT_ID: TIntegerField
       FieldName = 'MON$ATTACHMENT_ID'
@@ -1160,22 +1170,9 @@ object SDIAppForm: TSDIAppForm
     Left = 312
     Top = 328
   end
-  object PopupMenu1: TPopupMenu
-    OnPopup = PopupMenu1Popup
-    Left = 344
-    Top = 168
-    object N2: TMenuItem
-      Caption = #1055#1086#1076#1088#1086#1073#1085#1086#1089#1090#1080
-      Default = True
-      OnClick = N2Click
-    end
-    object N4: TMenuItem
-      Caption = #1059#1073#1080#1090#1100' '#1089#1086#1077#1076#1080#1085#1077#1085#1080#1077
-    end
-  end
   object DataSource1: TDataSource
     DataSet = IBQueryAttach
-    Left = 104
-    Top = 224
+    Left = 344
+    Top = 232
   end
 end

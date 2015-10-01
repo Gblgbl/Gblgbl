@@ -109,9 +109,6 @@ type
     IBQueryAttachSQL_TEXT: TWideMemoField;
     IBQueryAttachSTART_TR: TDateTimeField;
     Timer1: TTimer;
-    PopupMenu1: TPopupMenu;
-    N2: TMenuItem;
-    N4: TMenuItem;
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
     procedure FileNew1Execute(Sender: TObject);
@@ -133,6 +130,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure PopupMenu1Popup(Sender: TObject);
     procedure N2Click(Sender: TObject);
+    procedure sgOrdersClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -172,6 +170,14 @@ begin
       //IBDatabase1.d
     end;
   end;
+end;
+
+procedure TSDIAppForm.sgOrdersClick(Sender: TObject);
+begin
+  IBQueryAttach.Close;
+  IBQueryAttach.ParamByName('transaction_id').Value :=  StrToInt(sgOrders.Cells[5,sgOrders.Row]);
+  IBQueryAttach.Active:=True;
+  DBGrid1.Update;
 end;
 
 procedure TSDIAppForm.sgOrdersMouseDown(Sender: TObject; Button: TMouseButton;
@@ -289,12 +295,12 @@ begin
   end;
   if ((sgOrders.Cells[2,sgOrders.Row] <> '') and sysdba) then
   begin
-    PopUpMenu1.Items[0].Enabled := true;
-    PopUpMenu1.Items[1].Enabled := true;
+//    PopUpMenu1.Items[0].Enabled := true;
+//    PopUpMenu1.Items[1].Enabled := true;
   end
   else  begin
-    PopUpMenu1.Items[0].Enabled := false;
-    PopUpMenu1.Items[1].Enabled := true;
+//    PopUpMenu1.Items[0].Enabled := false;
+//    PopUpMenu1.Items[1].Enabled := true;
   end;
 end;
 
@@ -323,6 +329,7 @@ begin
   sgOrders.Rows[0].Add('Когда');
   sgOrders.Rows[0].Add('IP');
   sgOrders.Rows[0].Add('Login');
+  sgOrders.Rows[0].Add('ID транзакции');
   //sgOrders.Rows[0].Add('');
   if FileExists(FileDBS) then
   begin
@@ -376,7 +383,9 @@ begin
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('START_TR').AsString);
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$REMOTE_ADDRESS').AsString);
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$USER').AsString);
+      sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$TRANSACTION_ID').AsString);
       IBQueryAttach.Close;
+      sgOrdersClick(Sender);
     end else
     begin
       sgOrders.Rows[i].Add('-');
