@@ -287,7 +287,7 @@ begin
     begin
       BDList.Items[0].Checked := True;
       //IBDataBase1.DatabaseName
-      SetDBFileName;
+      //SetDBFileName;
     end;
   end
     else ShowMessage('Отсутствует список БД!');

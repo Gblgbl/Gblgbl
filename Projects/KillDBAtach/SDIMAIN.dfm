@@ -42,7 +42,6 @@ object SDIAppForm: TSDIAppForm
       item
         Width = 100
       end>
-    ExplicitWidth = 369
   end
   object eAgrno: TEdit
     Left = 129
