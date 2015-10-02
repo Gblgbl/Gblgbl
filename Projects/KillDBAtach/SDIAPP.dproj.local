@@ -1,12 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
 	<Transactions>
-    <Transaction>1899.12.30 00:00:00.000.542,=C:\proj\KillDBAtach\OKCANCL2.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.889,C:\proj\KillDBAtach\Unit1.dfm=C:\proj\KillDBAtach\DBs.dfm</Transaction>
     <Transaction>1899.12.30 00:00:00.000.889,C:\proj\KillDBAtach\Unit1.pas=C:\proj\KillDBAtach\DBs.pas</Transaction>
     <Transaction>1899.12.30 00:00:00.000.663,=C:\proj\KillDBAtach\Unit1.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.542,=C:\proj\KillDBAtach\OKCANCL2.pas</Transaction>
     <Transaction>2015.10.01 13:18:25.188,=C:\Users\Gblgbl\GIT\Projects\KillDBAtach\Unit2.pas</Transaction>
-    <Transaction>2015.10.01 13:20:18.598,C:\Users\Gblgbl\GIT\Projects\KillDBAtach\PropAttach.pas=C:\Users\Gblgbl\GIT\Projects\KillDBAtach\Unit2.pas</Transaction>
     <Transaction>2015.10.01 13:20:18.598,C:\Users\Gblgbl\GIT\Projects\KillDBAtach\PropAttach.dfm=C:\Users\Gblgbl\GIT\Projects\KillDBAtach\Unit2.dfm</Transaction>
+    <Transaction>2015.10.01 13:20:18.598,C:\Users\Gblgbl\GIT\Projects\KillDBAtach\PropAttach.pas=C:\Users\Gblgbl\GIT\Projects\KillDBAtach\Unit2.pas</Transaction>
+    <Transaction>2015.10.02 10:34:16.654,C:\Users\Gblgbl\GIT\Projects\KillDBAtach\Unlock.PAS=C:\Users\Gblgbl\GIT\Projects\KillDBAtach\SDIMAIN.PAS</Transaction>
+    <Transaction>2015.10.02 10:34:16.659,C:\Users\Gblgbl\GIT\Projects\KillDBAtach\Unlock.dfm=C:\Users\Gblgbl\GIT\Projects\KillDBAtach\SDIMAIN.dfm</Transaction>
+    <Transaction>2015.10.02 10:43:03.967,C:\Users\Gblgbl\GIT\Projects\KillDBAtach\PropAttach.pas=</Transaction>
   </Transactions>
 </BorlandProject>

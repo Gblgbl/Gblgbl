@@ -16,7 +16,6 @@ type
     bDown: TButton;
     GridEditPanel: TPanel;
     Label1: TLabel;
-    Label2: TLabel;
     procedure sgBDKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormActivate(Sender: TObject);
     procedure SetArrowButtonsEnabled ;

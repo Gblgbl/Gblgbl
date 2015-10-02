@@ -75,7 +75,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="SDIMAIN.PAS">
+        <DCCReference Include="Unlock.PAS">
             <Form>SDIAppForm</Form>
         </DCCReference>
         <DCCReference Include="ABOUT.PAS">
@@ -83,10 +83,6 @@
         </DCCReference>
         <DCCReference Include="DBs.pas">
             <Form>Form1</Form>
-            <FormType>dfm</FormType>
-        </DCCReference>
-        <DCCReference Include="PropAttach.pas">
-            <Form>Form2</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <BuildConfiguration Include="Debug">
@@ -154,7 +150,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="SDIMAIN.PAS" Configuration="Debug" Class="ProjectFile">
+                <DeployFile LocalName="Unlock.PAS" Configuration="Debug" Class="ProjectFile">
                     <Platform Name="Win32">
                         <RemoteDir>.\</RemoteDir>
                         <Overwrite>true</Overwrite>
