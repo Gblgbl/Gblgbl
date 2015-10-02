@@ -111,6 +111,7 @@ type
     Timer1: TTimer;
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
+    btnKill: TButton;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -131,6 +132,7 @@ type
     procedure PopupMenu1Popup(Sender: TObject);
     procedure N2Click(Sender: TObject);
     procedure sgOrdersClick(Sender: TObject);
+    procedure btnKillClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -173,9 +175,20 @@ begin
 end;
 
 procedure TSDIAppForm.sgOrdersClick(Sender: TObject);
+var
+  tid : integer ;
 begin
+  if sgOrders.Cells[5,sgOrders.Row] <> '' then
+  begin
+    tid := StrToInt(sgOrders.Cells[5,sgOrders.Row]);
+    btnKill.Enabled := true;
+  end
+  else begin
+    tid := 0;
+    btnKill.Enabled := False;
+  end;
   IBQueryAttach.Close;
-  IBQueryAttach.ParamByName('transaction_id').Value :=  StrToInt(sgOrders.Cells[5,sgOrders.Row]);
+  IBQueryAttach.ParamByName('transaction_id').Value :=  tid;
   IBQueryAttach.Active:=True;
   DBGrid1.Update;
 end;
@@ -253,8 +266,16 @@ end;
 procedure TSDIAppForm.Timer1Timer(Sender: TObject);
 begin
   if IBDataBase1.Connected then
-    StatusBar.Panels[1].Text:='Подключено.'
-    else StatusBar.Panels[1].Text:='Не подключено.';
+  begin
+
+    StatusBar.Panels[1].Text:='Подключено к ';
+    for i := 0 to BDList.Count - 1 do
+      if BDlist.Items[i].Checked then
+        StatusBar.Panels[1].Text := StatusBar.Panels[1].Text + BDlist.Items[i].Caption;
+  end else
+  begin
+    StatusBar.Panels[1].Text:='Не подключено.';
+  end;
 
 end;
 
@@ -330,6 +351,7 @@ begin
   sgOrders.Rows[0].Add('IP');
   sgOrders.Rows[0].Add('Login');
   sgOrders.Rows[0].Add('ID транзакции');
+  sgOrders.Rows[0].Add('ID соединения');
   //sgOrders.Rows[0].Add('');
   if FileExists(FileDBS) then
   begin
@@ -354,12 +376,13 @@ begin
   IBQueryOrders.ParamByName('agrno').Value:= Trim(eAgrno.Text);
   IBQueryOrders.Open;
   i := 0;
-  sgOrders.RowCount:=2;
-  sgOrders.Rows[1].Clear;
+  sgOrders.RowCount := 2;
+
   while not IBQueryOrders.Eof do
   begin                                           //teststr
     inc(i);
     sgOrders.RowCount:=i+1;
+    sgOrders.Rows[i].Clear;
     sgOrders.Rows[i].Add(IBQueryOrdersAGREEMENTNO.AsString);
     IBUpdOrders.ParamByName('orderid').Value:=IBQueryOrdersORDERID.AsInteger;
     IBUpdOrders.ParamByName('agrno').Value:=IBQueryOrdersAGREEMENTNO.AsString;//+teststr;
@@ -384,8 +407,8 @@ begin
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$REMOTE_ADDRESS').AsString);
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$USER').AsString);
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$TRANSACTION_ID').AsString);
+      sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('mon$attachment_id').AsString);
       IBQueryAttach.Close;
-      sgOrdersClick(Sender);
     end else
     begin
       sgOrders.Rows[i].Add('-');
@@ -394,6 +417,15 @@ begin
   end;
   IBQueryOrders.Close;
   IBTransaction1.Commit;
+  sgOrdersClick(Sender);
+end;
+
+procedure TSDIAppForm.btnKillClick(Sender: TObject);
+begin
+  IBKillAttach.Close;
+  IBKillAttach.ParamByName('attachment_id').Value := StrToInt(sgOrders.Cells[6,sgOrders.Row]);
+  IBKillAttach.ExecSQL;
+  bScrClick(Sender);
 end;
 
 procedure TSDIAppForm.eAgrnoChange(Sender: TObject);

@@ -52,11 +52,12 @@ object SDIAppForm: TSDIAppForm
     OnChange = eAgrnoChange
   end
   object mFileDBS: TMemo
-    Left = 0
-    Top = 272
+    Left = 8
+    Top = 360
     Width = 361
-    Height = 43
+    Height = 19
     TabOrder = 2
+    Visible = False
     WordWrap = False
   end
   object bScr: TButton
@@ -76,9 +77,9 @@ object SDIAppForm: TSDIAppForm
     Left = 0
     Top = 30
     Width = 434
-    Height = 99
+    Height = 167
     Anchors = [akLeft, akTop, akRight, akBottom]
-    ColCount = 6
+    ColCount = 7
     FixedCols = 0
     RowCount = 3
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goDrawFocusSelected, goColSizing, goRowSelect]
@@ -91,11 +92,12 @@ object SDIAppForm: TSDIAppForm
       113
       109
       43
-      110)
+      110
+      64)
   end
   object DBGrid1: TDBGrid
     Left = 0
-    Top = 146
+    Top = 234
     Width = 434
     Height = 120
     Anchors = [akLeft, akRight, akBottom]
@@ -122,6 +124,17 @@ object SDIAppForm: TSDIAppForm
         FieldName = 'SQL_TEXT'
         Visible = True
       end>
+  end
+  object btnKill: TButton
+    Left = 152
+    Top = 203
+    Width = 105
+    Height = 25
+    Anchors = [akLeft, akBottom]
+    Caption = #1054#1090#1082#1083#1102#1095#1080#1090#1100'!'
+    Enabled = False
+    TabOrder = 6
+    OnClick = btnKillClick
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
@@ -227,7 +240,7 @@ object SDIAppForm: TSDIAppForm
   end
   object ImageList1: TImageList
     Left = 248
-    Top = 336
+    Top = 328
     Bitmap = {
       494C01010F001300200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
@@ -775,21 +788,19 @@ object SDIAppForm: TSDIAppForm
     Top = 328
   end
   object IBDatabase1: TIBDatabase
-    Connected = True
     DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
     Params.Strings = (
       'user_name=sysdba')
     ServerType = 'IBServer'
-    Left = 32
-    Top = 136
+    Left = 72
+    Top = 256
   end
   object IBTransaction1: TIBTransaction
-    Active = True
     DefaultDatabase = IBDatabase1
     Params.Strings = (
       'nowait')
-    Left = 24
-    Top = 192
+    Left = 16
+    Top = 256
   end
   object IBQueryOrders: TIBQuery
     Database = IBDatabase1
@@ -799,8 +810,8 @@ object SDIAppForm: TSDIAppForm
     ParamCheck = True
     SQL.Strings = (
       'select * from orders where agreementno containing :agrno')
-    Left = 112
-    Top = 136
+    Left = 136
+    Top = 256
     ParamData = <
       item
         DataType = ftUnknown
@@ -1021,8 +1032,8 @@ object SDIAppForm: TSDIAppForm
     SQL.Strings = (
       'update orders set agreementno =:agrno'
       'where orderid =:orderid')
-    Left = 192
-    Top = 136
+    Left = 184
+    Top = 256
     ParamData = <
       item
         DataType = ftUnknown
@@ -1045,8 +1056,8 @@ object SDIAppForm: TSDIAppForm
       
         'delete  from mon$attachments  where mon$attachment_id  =:attachm' +
         'ent_id')
-    Left = 280
-    Top = 192
+    Left = 248
+    Top = 256
     ParamData = <
       item
         DataType = ftUnknown
@@ -1077,8 +1088,8 @@ object SDIAppForm: TSDIAppForm
       
         'where t.mon$transaction_id =:transaction_id  and t2.mon$transact' +
         'ion_id <> current_transaction')
-    Left = 344
-    Top = 168
+    Left = 376
+    Top = 256
     ParamData = <
       item
         DataType = ftInteger
@@ -1172,7 +1183,7 @@ object SDIAppForm: TSDIAppForm
   end
   object DataSource1: TDataSource
     DataSet = IBQueryAttach
-    Left = 344
-    Top = 232
+    Left = 312
+    Top = 256
   end
 end

@@ -7,7 +7,8 @@ uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
   Vcl.ImgList, Vcl.StdActns, Vcl.ActnList, Vcl.ToolWin, System.ImageList,
   System.Actions, Dbs, SysUtils, Data.DB, IBX.IBDatabase, IBX.IBCustomDataSet,
   IBX.IBQuery, FireDAC.Phys.IBDef, FireDAC.Stan.Intf, FireDAC.Phys,
-  FireDAC.Phys.IBBase, FireDAC.Phys.IB, DBLogDlg, Vcl.Grids, StrUtils;
+  FireDAC.Phys.IBBase, FireDAC.Phys.IB, DBLogDlg, Vcl.Grids, StrUtils,
+  PropAttach, Vcl.DBGrids;
 
 type
   TSDIAppForm = class(TForm)
@@ -18,10 +19,6 @@ type
     File1: TMenuItem;
     N1: TMenuItem;
     FileExitItem: TMenuItem;
-    Edit1: TMenuItem;
-    CutItem: TMenuItem;
-    CopyItem: TMenuItem;
-    PasteItem: TMenuItem;
     Help1: TMenuItem;
     HelpAboutItem: TMenuItem;
     ActionList1: TActionList;
@@ -93,7 +90,6 @@ type
     IBKillAttach: TIBQuery;
     IBQueryAttach: TIBQuery;
     bScr: TButton;
-    FDPhysIBDriverLink1: TFDPhysIBDriverLink;
     sgOrders: TStringGrid;
     IBQueryAttachMONATTACHMENT_ID: TIntegerField;
     IBQueryAttachMONSERVER_PID: TIntegerField;
@@ -112,6 +108,9 @@ type
     IBQueryAttachMONTRANSACTION_ID: TIntegerField;
     IBQueryAttachSQL_TEXT: TWideMemoField;
     IBQueryAttachSTART_TR: TDateTimeField;
+    Timer1: TTimer;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
@@ -125,6 +124,13 @@ type
     procedure OnBDListItemClick (Sender : TObject);
     procedure eAgrnoChange(Sender: TObject);
     procedure bScrClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure SetDBFileName;
+    procedure sgOrdersMouseDown(Sender: TObject; Button: TMouseButton;
+      Shift: TShiftState; X, Y: Integer);
+    procedure PopupMenu1Popup(Sender: TObject);
+    procedure N2Click(Sender: TObject);
+    procedure sgOrdersClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -147,6 +153,50 @@ implementation
 uses About;
 
 {$R *.dfm}
+procedure TSDIAppForm.SetDBFileName;
+var
+  n : integer ;
+  tmpStr : TIBFileName;
+begin
+  for I := 0 to BDList.Count - 1 do
+  begin
+    if BDList.Items[i].Checked then
+    begin
+      n:=i;
+      IBDatabase1.Connected := False ;
+      
+      tmpStr := Trim(DBS.Form1.sgBD.Cells[2,i+1]);
+      IBDatabase1.DatabaseName := TIBFileName(tmpStr);   //тут какая-то шляпа
+      //IBDatabase1.d
+    end;
+  end;
+end;
+
+procedure TSDIAppForm.sgOrdersClick(Sender: TObject);
+var
+  tid : integer ;
+begin
+  if sgOrders.Cells[5,sgOrders.Row] <> '' then
+  begin
+    tid := StrToInt(sgOrders.Cells[5,sgOrders.Row]);
+
+  end
+  else begin
+    tid := 0;
+  end;
+  IBQueryAttach.Close;
+  IBQueryAttach.ParamByName('transaction_id').Value :=  tid;
+  IBQueryAttach.Active:=True;
+  DBGrid1.Update;
+end;
+
+procedure TSDIAppForm.sgOrdersMouseDown(Sender: TObject; Button: TMouseButton;
+  Shift: TShiftState; X, Y: Integer);
+begin
+//  if Button = mbRight then ShowMessage('Button.mbRight');
+
+end;
+
 procedure TSDIAppForm.fillGridFromMemo ;
 const
   SepChar = '=';
@@ -189,21 +239,79 @@ end;
 procedure TSDIAppForm.SetBDListSubMenu ;
 var
   item : TMenuItem;
+  tmpStr : string ;
 begin
+  tmpStr := IBDatabase1.DatabaseName; //  IBDatabase1.CheckDatabaseName
+  tmpStr := Trim(tmpStr);
   BDList.Clear;
   for I := 1 to DBs.Form1.sgBD.RowCount - 1  do
   begin
     item := TMenuItem.Create(BDlist);
     item.Caption := DBs.Form1.sgBD.Cells[1,i];
+    
+    item.Hint := DBs.Form1.sgBD.Cells[2,i];
     item.Name := 'BDListItem'+IntToStr(i);
     item.OnClick := OnBDListItemClick;
+    if Trim(DBs.Form1.sgBD.Cells[2,i]) = tmpStr then
+      item.Checked := true
+      else item.Checked := false;
     BDList.Add(item);
   end;
+  //ShowMessage(IBDataBase1.DatabaseName);
+end;
+
+procedure TSDIAppForm.Timer1Timer(Sender: TObject);
+begin
+  if IBDataBase1.Connected then
+    StatusBar.Panels[1].Text:='Подключено.'
+    else StatusBar.Panels[1].Text:='Не подключено.';
+
 end;
 
 procedure TSDIAppForm.OnBDListItemClick ( Sender : TObject ) ;
+var
+  n : integer ;
 begin
-  ShowMessage((Sender as TMenuItem).Name);
+  //ShowMessage(IntToStr((Sender as TMenuItem).MenuIndex));
+  n := (Sender as TMenuItem).MenuIndex;
+  if not BDList.Items[n].Checked then
+  begin
+    for I := 0 to BDList.Count - 1 do
+      BDList.Items[i].Checked := False;
+    BDList.Items[n].Checked := true;
+    SetDBFileName;
+  end;
+
+end;
+
+procedure TSDIAppForm.PopupMenu1Popup(Sender: TObject);
+var
+  p : TPoint;
+  sysdba : boolean;
+begin
+  GetCursorPos(p);
+  {Имитируем нажатие левой кнопки мыши}
+  Mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTDOWN,p.x,p.y,0,0);
+  {Имитируем отпускание левой кнопки мыши}
+  Mouse_Event(MOUSEEVENTF_ABSOLUTE or MOUSEEVENTF_LEFTUP, p.x,p.y,0,0);
+  Application.ProcessMessages;
+  if pos('SYSDBA',UpperCase(IBDatabase1.Params.Text)) > 0  then
+  begin
+    sysdba := true;
+  end else
+  begin
+    //PopUpMenu1.Items[1].Enabled
+    sysdba := false;
+  end;
+  if ((sgOrders.Cells[2,sgOrders.Row] <> '') and sysdba) then
+  begin
+//    PopUpMenu1.Items[0].Enabled := true;
+//    PopUpMenu1.Items[1].Enabled := true;
+  end
+  else  begin
+//    PopUpMenu1.Items[0].Enabled := false;
+//    PopUpMenu1.Items[1].Enabled := true;
+  end;
 end;
 
 procedure TSDIAppForm.FileNew1Execute(Sender: TObject);
@@ -231,12 +339,19 @@ begin
   sgOrders.Rows[0].Add('Когда');
   sgOrders.Rows[0].Add('IP');
   sgOrders.Rows[0].Add('Login');
+  sgOrders.Rows[0].Add('ID транзакции');
   //sgOrders.Rows[0].Add('');
   if FileExists(FileDBS) then
   begin
     mFileDBS.Lines.LoadFromFile(FileDBS) ;
     fillGridFromMemo;
     SetBDListSubMenu;
+    if BDList.Count > 0 then
+    begin
+      BDList.Items[0].Checked := True;
+      //IBDataBase1.DatabaseName
+      //SetDBFileName;
+    end;
   end
     else ShowMessage('Отсутствует список БД!');
 end;
@@ -246,8 +361,6 @@ var
   id : integer ;
   ExceptionMessage : string ;
 begin
-  //ShowMessage('q');
-  //sgOrders.Rows.Clear;
   IBQueryOrders.ParamByName('agrno').Value:= Trim(eAgrno.Text);
   IBQueryOrders.Open;
   i := 0;
@@ -280,7 +393,9 @@ begin
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('START_TR').AsString);
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$REMOTE_ADDRESS').AsString);
       sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$USER').AsString);
+      sgOrders.Rows[i].Add(IBQueryAttach.FieldByName('MON$TRANSACTION_ID').AsString);
       IBQueryAttach.Close;
+
     end else
     begin
       sgOrders.Rows[i].Add('-');
@@ -289,6 +404,7 @@ begin
   end;
   IBQueryOrders.Close;
   IBTransaction1.Commit;
+  sgOrdersClick(Sender);
 end;
 
 procedure TSDIAppForm.eAgrnoChange(Sender: TObject);
@@ -307,6 +423,11 @@ end;
 procedure TSDIAppForm.HelpAbout1Execute(Sender: TObject);
 begin
   AboutBox.ShowModal;
+end;
+
+procedure TSDIAppForm.N2Click(Sender: TObject);
+begin
+  PropAttach.Form2.DBGrid1.DataSource := DataSource1;
 end;
 
 procedure TSDIAppForm.N3Click(Sender: TObject);
