@@ -111,19 +111,16 @@ object SDIAppForm: TSDIAppForm
       item
         Expanded = False
         FieldName = 'MON$ATTACHMENT_ID'
-        Title.Caption = 'ID '#1089#1086#1077#1076#1080#1085#1077#1085#1080#1103
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'MON$TRANSACTION_ID'
-        Title.Caption = 'ID '#1090#1088#1072#1085#1079#1072#1082#1094#1080#1080
         Visible = True
       end
       item
         Expanded = False
-        FieldName = 'START_TR2'
-        Title.Caption = #1057#1090#1072#1088#1090' '#1090#1088#1072#1085#1079#1072#1082#1094#1080#1080
+        FieldName = 'SQL_TEXT'
         Visible = True
       end>
   end
@@ -244,7 +241,7 @@ object SDIAppForm: TSDIAppForm
     Left = 248
     Top = 328
     Bitmap = {
-      494C01010F001300240010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C01010F001300200010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000004000000001002000000000000040
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -790,16 +787,14 @@ object SDIAppForm: TSDIAppForm
     Top = 328
   end
   object IBDatabase1: TIBDatabase
-    Connected = True
     DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
     Params.Strings = (
-      'user_name=q')
+      'user_name=sysdba')
     ServerType = 'IBServer'
     Left = 72
     Top = 256
   end
   object IBTransaction1: TIBTransaction
-    Active = True
     DefaultDatabase = IBDatabase1
     Params.Strings = (
       'nowait')
@@ -1078,8 +1073,7 @@ object SDIAppForm: TSDIAppForm
     SQL.Strings = (
       
         'select distinct a.*,  t2.mon$transaction_id, coalesce(s.mon$sql_' +
-        'text,'#39#39') as sql_text, t.mon$timestamp as start_tr, t2.mon$timest' +
-        'amp as start_tr2'
+        'text,'#39#39') as sql_text, t.mon$timestamp as start_tr'
       'from mon$transactions t'
       
         'join mon$attachments a on a.mon$attachment_id = t.mon$attachment' +
@@ -1178,10 +1172,6 @@ object SDIAppForm: TSDIAppForm
     end
     object IBQueryAttachSTART_TR: TDateTimeField
       FieldName = 'START_TR'
-      Origin = '"MON$TRANSACTIONS"."MON$TIMESTAMP"'
-    end
-    object IBQueryAttachSTART_TR2: TDateTimeField
-      FieldName = 'START_TR2'
       Origin = '"MON$TRANSACTIONS"."MON$TIMESTAMP"'
     end
   end

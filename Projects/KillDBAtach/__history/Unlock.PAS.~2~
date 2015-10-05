@@ -112,7 +112,6 @@ type
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
     btnKill: TButton;
-    IBQueryAttachSTART_TR2: TDateTimeField;
     procedure FileNew1Execute(Sender: TObject);
     procedure FileOpen1Execute(Sender: TObject);
     procedure FileSave1Execute(Sender: TObject);
