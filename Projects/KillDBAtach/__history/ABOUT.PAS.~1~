@@ -3,7 +3,7 @@ unit ABOUT;
 interface
 
 uses Winapi.Windows, System.Classes, Vcl.Graphics, Vcl.Forms, Vcl.Controls,
-  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls, Vcl.Imaging.pngimage;
+  Vcl.StdCtrls, Vcl.Buttons, Vcl.ExtCtrls;
 
 type
   TAboutBox = class(TForm)
@@ -26,8 +26,6 @@ var
 implementation
 
 {$R *.dfm}
-
-
 
 end.
  
