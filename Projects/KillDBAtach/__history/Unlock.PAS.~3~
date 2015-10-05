@@ -147,7 +147,6 @@ const
           'deadlock'+#13+#10+
           'update conflicts with concurrent update'+#13+#10+
           'concurrent transaction number is ';
-  DefNumber = '/num:';
 var
   SDIAppForm: TSDIAppForm;
   i : integer ;
@@ -368,14 +367,6 @@ begin
     end;
   end
     else ShowMessage('Отсутствует список БД!');
-  for I := 1 to ParamCount do
-  begin
-    if Pos(DefNumber,paramstr(i)) = 1 then
-    begin
-      eAgrno.Text := Trim(Copy(paramstr(i),Length(DefNumber)+1,Length(paramstr(i))-Length(DefNumber)));
-      if length(Trim(eAgrno.Text)) > 5 then bScrClick(Sender);
-    end;
-  end;
 end;
 
 procedure TSDIAppForm.bScrClick(Sender: TObject);

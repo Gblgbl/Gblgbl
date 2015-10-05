@@ -790,6 +790,7 @@ object SDIAppForm: TSDIAppForm
     Top = 328
   end
   object IBDatabase1: TIBDatabase
+    Connected = True
     DatabaseName = '192.168.168.2:D:\db2014\odin2015_1.gdb'
     Params.Strings = (
       'user_name=q')
@@ -798,6 +799,7 @@ object SDIAppForm: TSDIAppForm
     Top = 256
   end
   object IBTransaction1: TIBTransaction
+    Active = True
     DefaultDatabase = IBDatabase1
     Params.Strings = (
       'nowait')
