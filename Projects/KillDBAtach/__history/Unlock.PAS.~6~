@@ -363,8 +363,8 @@ begin
     if BDList.Count > 0 then
     begin
       BDList.Items[0].Checked := True;
-      ///IBDataBase1.DatabaseName
-      SetDBFileName;
+      //IBDataBase1.DatabaseName
+      //SetDBFileName;
     end;
   end
     else ShowMessage('Отсутствует список БД!');
