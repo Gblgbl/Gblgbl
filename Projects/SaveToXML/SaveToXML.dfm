@@ -43,86 +43,24 @@ object Form1: TForm1
     CachedUpdates = False
     ParamCheck = True
     SQL.Strings = (
-      'select co.inn, cu.customerid'
+      'select distinct co.inn, cu.customerid'
       'from customers cu'
       'join contragents co on co.contragid = cu.contragid'
       'join orders o on o.customerid = cu.customerid'
       'left join orderitems oi on oi.orderid = o.orderid'
-      'where coalesce(co.inn, '#39#39') <> '#39#39
-      'group by 1,2,3,5,6,7,8')
+      'where coalesce(co.inn, '#39#39') <> '#39#39' and cu.deleted = 0')
     Left = 32
     Top = 136
-    object IBQueryCustDIRACTIONSID: TIntegerField
-      FieldName = 'DIRACTIONSID'
-      Origin = '"DIRACTIONS"."DIRACTIONSID"'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object IBQueryCustRECINDEX: TIntegerField
-      FieldName = 'RECINDEX'
-      Origin = '"DIRACTIONS"."RECINDEX"'
-    end
-    object IBQueryCustNAME: TIBStringField
-      FieldName = 'NAME'
-      Origin = '"DIRACTIONS"."NAME"'
-      Required = True
+    object IBQueryCustINN: TIBStringField
+      FieldName = 'INN'
+      Origin = '"CONTRAGENTS"."INN"'
       Size = 32
     end
-    object IBQueryCustRCOMMENT: TIBStringField
-      FieldName = 'RCOMMENT'
-      Origin = '"DIRACTIONS"."RCOMMENT"'
-      Size = 256
-    end
-    object IBQueryCustRECCOLOR: TIntegerField
-      FieldName = 'RECCOLOR'
-      Origin = '"DIRACTIONS"."RECCOLOR"'
-    end
-    object IBQueryCustRECFLAG: TIntegerField
-      FieldName = 'RECFLAG'
-      Origin = '"DIRACTIONS"."RECFLAG"'
-    end
-    object IBQueryCustGUIDHI: TLargeintField
-      FieldName = 'GUIDHI'
-      Origin = '"DIRACTIONS"."GUIDHI"'
+    object IBQueryCustCUSTOMERID: TIntegerField
+      FieldName = 'CUSTOMERID'
+      Origin = '"CUSTOMERS"."CUSTOMERID"'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
       Required = True
-    end
-    object IBQueryCustGUIDLO: TLargeintField
-      FieldName = 'GUIDLO'
-      Origin = '"DIRACTIONS"."GUIDLO"'
-      Required = True
-    end
-    object IBQueryCustOWNERID: TIntegerField
-      FieldName = 'OWNERID'
-      Origin = '"DIRACTIONS"."OWNERID"'
-    end
-    object IBQueryCustDATECREATED: TDateTimeField
-      FieldName = 'DATECREATED'
-      Origin = '"DIRACTIONS"."DATECREATED"'
-    end
-    object IBQueryCustDATEMODIFIED: TDateTimeField
-      FieldName = 'DATEMODIFIED'
-      Origin = '"DIRACTIONS"."DATEMODIFIED"'
-    end
-    object IBQueryCustDATEDELETED: TDateTimeField
-      FieldName = 'DATEDELETED'
-      Origin = '"DIRACTIONS"."DATEDELETED"'
-    end
-    object IBQueryCustDELETED: TIntegerField
-      FieldName = 'DELETED'
-      Origin = '"DIRACTIONS"."DELETED"'
-    end
-    object IBQueryCustISADD: TIntegerField
-      FieldName = 'ISADD'
-      Origin = '"DIRACTIONS"."ISADD"'
-    end
-    object IBQueryCustCODE: TIBStringField
-      FieldName = 'CODE'
-      Origin = '"DIRACTIONS"."CODE"'
-      Size = 128
-    end
-    object IBQueryCustUSEINPLANNING: TIntegerField
-      FieldName = 'USEINPLANNING'
-      Origin = '"DIRACTIONS"."USEINPLANNING"'
     end
   end
   object XMLDocument1: TXMLDocument
@@ -159,8 +97,8 @@ object Form1: TForm1
       '      and dd2.diractionsid = 37 -- ID '#1101#1090#1072#1087#1072' "'#1055#1077#1088#1077#1085#1086#1089' '#1076#1086#1089#1090#1072#1074#1082#1080'"'
       '      and coalesce(dd2.rcomment,'#39#39') not containing '#39'ANTOR'#39
       '      )'
-      'where o.deleted <> 0 and o.customerid =:customerid'
-      'group by 1,2,3,5,6,7,8')
+      'where o.deleted = 0 and o.customerid =:customerid'
+      'group by 1,2,4,5,6,7')
     Left = 112
     Top = 136
     ParamData = <
@@ -169,77 +107,42 @@ object Form1: TForm1
         Name = 'customerid'
         ParamType = ptUnknown
       end>
-    object IntegerField1: TIntegerField
-      FieldName = 'DIRACTIONSID'
-      Origin = '"DIRACTIONS"."DIRACTIONSID"'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object IntegerField2: TIntegerField
-      FieldName = 'RECINDEX'
-      Origin = '"DIRACTIONS"."RECINDEX"'
-    end
-    object IBStringField1: TIBStringField
-      FieldName = 'NAME'
-      Origin = '"DIRACTIONS"."NAME"'
-      Required = True
+    object IBQueryOrdersAGREEMENTNO: TIBStringField
+      FieldName = 'AGREEMENTNO'
+      Origin = '"ORDERS"."AGREEMENTNO"'
       Size = 32
     end
-    object IBStringField2: TIBStringField
-      FieldName = 'RCOMMENT'
-      Origin = '"DIRACTIONS"."RCOMMENT"'
+    object IBQueryOrdersPRODDATE: TDateTimeField
+      FieldName = 'PRODDATE'
+      Origin = '"ORDERS"."PRODDATE"'
+    end
+    object IBQueryOrdersUSLUGI_DOSTAVKI: TWideMemoField
+      FieldName = 'USLUGI_DOSTAVKI'
+      ProviderFlags = []
+      BlobType = ftWideMemo
+      Size = 8
+    end
+    object IBQueryOrdersORDERSTATNAME: TIBStringField
+      FieldName = 'ORDERSTATNAME'
+      ProviderFlags = []
       Size = 256
     end
-    object IntegerField3: TIntegerField
-      FieldName = 'RECCOLOR'
-      Origin = '"DIRACTIONS"."RECCOLOR"'
+    object IBQueryOrdersRCOMMENT: TIBStringField
+      FieldName = 'RCOMMENT'
+      Origin = '"DIRDATES"."RCOMMENT"'
+      Size = 256
     end
-    object IntegerField4: TIntegerField
-      FieldName = 'RECFLAG'
-      Origin = '"DIRACTIONS"."RECFLAG"'
+    object IBQueryOrdersPLAN_DATE: TDateTimeField
+      FieldName = 'PLAN_DATE'
+      Origin = '"DIRDATES"."PLAN_DATE"'
     end
-    object LargeintField1: TLargeintField
-      FieldName = 'GUIDHI'
-      Origin = '"DIRACTIONS"."GUIDHI"'
-      Required = True
+    object IBQueryOrdersAGREEMENTDATE: TDateTimeField
+      FieldName = 'AGREEMENTDATE'
+      Origin = '"ORDERS"."AGREEMENTDATE"'
     end
-    object LargeintField2: TLargeintField
-      FieldName = 'GUIDLO'
-      Origin = '"DIRACTIONS"."GUIDLO"'
-      Required = True
-    end
-    object IntegerField5: TIntegerField
-      FieldName = 'OWNERID'
-      Origin = '"DIRACTIONS"."OWNERID"'
-    end
-    object DateTimeField1: TDateTimeField
-      FieldName = 'DATECREATED'
-      Origin = '"DIRACTIONS"."DATECREATED"'
-    end
-    object DateTimeField2: TDateTimeField
-      FieldName = 'DATEMODIFIED'
-      Origin = '"DIRACTIONS"."DATEMODIFIED"'
-    end
-    object DateTimeField3: TDateTimeField
-      FieldName = 'DATEDELETED'
-      Origin = '"DIRACTIONS"."DATEDELETED"'
-    end
-    object IntegerField6: TIntegerField
-      FieldName = 'DELETED'
-      Origin = '"DIRACTIONS"."DELETED"'
-    end
-    object IntegerField7: TIntegerField
-      FieldName = 'ISADD'
-      Origin = '"DIRACTIONS"."ISADD"'
-    end
-    object IBStringField3: TIBStringField
-      FieldName = 'CODE'
-      Origin = '"DIRACTIONS"."CODE"'
-      Size = 128
-    end
-    object IntegerField8: TIntegerField
-      FieldName = 'USEINPLANNING'
-      Origin = '"DIRACTIONS"."USEINPLANNING"'
+    object IBQueryOrdersQTY: TLargeintField
+      FieldName = 'QTY'
+      ProviderFlags = []
     end
   end
 end
