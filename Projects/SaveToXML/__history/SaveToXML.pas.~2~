@@ -1,0 +1,103 @@
+unit SaveToXML;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Xml.xmldom, Xml.XMLIntf, Data.DB,
+  IBX.IBCustomDataSet, Xml.XMLDoc, IBX.IBQuery, IBX.IBDatabase, Vcl.StdCtrls,
+  Xml.Win.msxmldom;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    IBDatabase1: TIBDatabase;
+    IBTransaction1: TIBTransaction;
+    IBQuery1: TIBQuery;
+    XMLDocument1: TXMLDocument;
+    IBQuery1DIRACTIONSID: TIntegerField;
+    IBQuery1RECINDEX: TIntegerField;
+    IBQuery1NAME: TIBStringField;
+    IBQuery1RCOMMENT: TIBStringField;
+    IBQuery1RECCOLOR: TIntegerField;
+    IBQuery1RECFLAG: TIntegerField;
+    IBQuery1GUIDHI: TLargeintField;
+    IBQuery1GUIDLO: TLargeintField;
+    IBQuery1OWNERID: TIntegerField;
+    IBQuery1DATECREATED: TDateTimeField;
+    IBQuery1DATEMODIFIED: TDateTimeField;
+    IBQuery1DATEDELETED: TDateTimeField;
+    IBQuery1DELETED: TIntegerField;
+    IBQuery1ISADD: TIntegerField;
+    IBQuery1CODE: TIBStringField;
+    IBQuery1USEINPLANNING: TIntegerField;
+    procedure createXml ;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+procedure TForm1.createXml ;
+begin
+  XmlDocument1.Active := true;
+  with XmlDocument1 do
+  begin
+    // создаем корневой узел
+    with AddChild ('Data') do
+    begin
+
+      // создаем дочерний узел
+      with AddChild ('Contragent') do
+      begin
+      // дочерние элементы
+        ChildValues ['INN'] := 1;
+        with AddChild ('Agreement') do
+        begin
+          ChildValues ['AgreementNo'] := '123456';
+          ChildValues ['Status'] := '¬ производстве';
+        end;
+      end; // with
+      with AddChild ('Contragent') do
+      begin
+      // дочерние элементы
+        ChildValues ['INN'] := 2;
+        with AddChild ('Agreement') do
+        begin
+          ChildValues ['AgreementNo'] := '123457';
+          ChildValues ['Status'] := 'ƒоставлен';
+        end;
+
+      end; // with
+
+    end; // with
+//    with AddChild ('Data2') do
+//    begin
+//      // создаем дочерний узел
+//      with AddChild ('User2') do
+//      begin
+//      // дочерние элементы
+//      ChildValues ['Id'] := 2;
+//      ChildValues ['Name'] := 'Ќаблюдатель2';
+//      ChildValues ['Status'] := 'Developer1';
+//
+//      end; // with
+//
+//    end;
+
+  end; // with: создаем
+
+    // записываем
+  XmlDocument1. SaveToFile ('Example1.xml');
+
+    // обрати внимание, что объект Xml самосто€тельно не уничтожаем, т.к.
+    // он уничтожитс€ автоматически при выходе из этой процедуры
+end;
+
+end.

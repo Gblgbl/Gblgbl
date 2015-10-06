@@ -1,0 +1,16 @@
+<Data>
+  <Contragent>
+    <INN>1</INN>
+    <Agreement>
+      <AgreementNo>123456</AgreementNo>
+      <Status>В производстве</Status>
+    </Agreement>
+  </Contragent>
+  <Contragent>
+    <INN>2</INN>
+    <Agreement>
+      <AgreementNo>123457</AgreementNo>
+      <Status>Доставлен</Status>
+    </Agreement>
+  </Contragent>
+</Data>

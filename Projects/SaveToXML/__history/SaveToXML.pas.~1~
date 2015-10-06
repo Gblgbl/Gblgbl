@@ -1,0 +1,75 @@
+unit SaveToXML;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Xml.xmldom, Xml.XMLIntf, Data.DB,
+  IBX.IBCustomDataSet, Xml.XMLDoc, IBX.IBQuery, IBX.IBDatabase, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    IBDatabase1: TIBDatabase;
+    IBTransaction1: TIBTransaction;
+    IBQuery1: TIBQuery;
+    XMLDocument1: TXMLDocument;
+    IBQuery1DIRACTIONSID: TIntegerField;
+    IBQuery1RECINDEX: TIntegerField;
+    IBQuery1NAME: TIBStringField;
+    IBQuery1RCOMMENT: TIBStringField;
+    IBQuery1RECCOLOR: TIntegerField;
+    IBQuery1RECFLAG: TIntegerField;
+    IBQuery1GUIDHI: TLargeintField;
+    IBQuery1GUIDLO: TLargeintField;
+    IBQuery1OWNERID: TIntegerField;
+    IBQuery1DATECREATED: TDateTimeField;
+    IBQuery1DATEMODIFIED: TDateTimeField;
+    IBQuery1DATEDELETED: TDateTimeField;
+    IBQuery1DELETED: TIntegerField;
+    IBQuery1ISADD: TIntegerField;
+    IBQuery1CODE: TIBStringField;
+    IBQuery1USEINPLANNING: TIntegerField;
+    procedure Button1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  with XmlDocument1 do
+  begin
+    // создаем корневой узел
+    with AddChild ('Config') do
+    begin
+      // создаем дочерний узел
+      with AddChild ('User') do
+      begin
+      // дочерние элементы
+      ChildValues ['Id'] := 1;
+      ChildValues ['Name'] := 'Ќаблюдатель';
+      ChildValues ['Status'] := 'Developer';
+
+      end; // with
+
+    end; // with
+
+  end; // with: создаем
+
+    // записываем
+  XmlDocument1. SaveToFile ('Example1.xml');
+
+    // обрати внимание, что объект Xml самосто€тельно не уничтожаем, т.к.
+    // он уничтожитс€ автоматически при выходе из этой процедуры
+end;
+
+end.
