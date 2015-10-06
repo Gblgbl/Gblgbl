@@ -142,6 +142,7 @@ type
 const
   FileDBS = 'dbsList.dbl';
   teststr = 'teststr';
+ // emess = 'ExecSQL error.'+#13+#10+
   emess = 'lock conflict on no wait transaction'+#13+#10+
           'deadlock'+#13+#10+
           'update conflicts with concurrent update'+#13+#10+
